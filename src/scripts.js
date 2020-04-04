@@ -197,15 +197,10 @@ let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
 // }
 
-// function createEventListeners() {
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
-// }
-
-
-
 
 
 function flipCard(cardToHide, cardToShow) {
