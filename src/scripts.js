@@ -1,5 +1,6 @@
 import './css/base.scss';
 import './css/styles.scss';
+
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';
@@ -10,8 +11,9 @@ let sleepData = []
 let activityData = []
 let hydrationData = []
 let user;
+
 let todayDate = "2019/09/22";
-// user.findFriendsNames(userRepository.users)
+
 Promise.all([
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData').then(response => response.json()),
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData').then(response => response.json()),
@@ -25,7 +27,10 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
   displayAllInfo()
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 }
 
 function createUserRepo(userInfo) {
@@ -46,7 +51,6 @@ function createSleepInfo(sleepInfo) {
   const newSleep = new Sleep(curSleep, userRepository)
     sleepData.push(newSleep)
   })
-  // loadSleepFunctions()
 }
 
 function createActivityInfo(activityInfo) {
@@ -90,15 +94,6 @@ let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality
 let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
 let sleepMainCard = document.querySelector('#sleep-main-card');
 let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-// let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-//   if (Object.keys(a)[0] > Object.keys(b)[0]) {
-//     return -1;
-//   }
-//   if (Object.keys(a)[0] < Object.keys(b)[0]) {
-//     return 1;
-//   }
-//   return 0;
-// });
 let stairsCalendarCard = document.querySelector('#stairs-calendar-card');
 let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
 let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
@@ -128,13 +123,10 @@ let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phras
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
-
-
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
-
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -144,6 +136,7 @@ function flipCard(cardToHide, cardToShow) {
 function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
 }
+
 //refactor
 function showInfo() {
   if (event.target.classList.contains('steps-info-button')) {
@@ -212,10 +205,6 @@ function updateTrendingStepDays() {
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
 }
 
-// for (var i = 0; i < dailyOz.length; i++) {
-//   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-// }
-
 function displayAllInfo() {
 
   let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
@@ -264,7 +253,6 @@ sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
 
 sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
 
-// console.log(user.activityRecord)
 stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
   return (activity.date === todayDate && activity.userId === user.id)
 }).calculateMiles(userRepository);
