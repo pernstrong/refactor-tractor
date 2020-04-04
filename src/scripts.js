@@ -29,11 +29,19 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
     })
   })
   .then(data => assignUser())
-  .then(data => fetchSleepData())
+  .then(data => fetchAllData())
+
+
 
 function assignUser() {
   let randomNum = Math.floor((Math.random() * 49));
   user = userRepository.users[randomNum]
+}
+
+function fetchAllData() {
+  fetchSleepData()
+  // fetchActivityData()
+  // fetchHyrdationData()
 }
 
 function fetchSleepData() {
@@ -47,12 +55,15 @@ function fetchSleepData() {
       });
     })
     .then(data => loadSleepFunctions())
+    .catch(err => console.error(err))
   // .then(data => console.log(sleepData))
 }
 
 // break up into more functions
 function loadSleepFunctions() {
-  console.log(user)
+  // console.log(user)
+  // console.log(userRepository.users)
+  console.log(sleepData[0])
   let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
   let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 
