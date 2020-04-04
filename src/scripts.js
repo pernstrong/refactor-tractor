@@ -1,9 +1,9 @@
 import './css/base.scss';
 import './css/styles.scss';
 
-import userData from './data/users';
+// import userData from './data/users';
 import activityData from './data/activity';
-import sleepData from './data/sleep';
+// import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 
 import UserRepository from './UserRepository';
@@ -11,31 +11,94 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
-
-
-
 let userRepository = new UserRepository();
+let sleepData = []
+let user;
 
-userData.forEach(user => {
-  user = new User(user);
-  userRepository.users.push(user)
-});
+// let user = userRepository.users[0];
+let todayDate = "2019/09/22";
+// user.findFriendsNames(userRepository.users);
 
-activityData.forEach(activity => {
-  activity = new Activity(activity, userRepository);
-});
+
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+  .then(response => response.json())
+  .then(data => {
+    data.userData.forEach(user => {
+      const people = new User(user);
+      userRepository.users.push(people)
+    })
+  })
+  .then(data => assignUser())
+  .then(data => fetchAllData())
+
+
+
+function assignUser() {
+  let randomNum = Math.floor((Math.random() * 49));
+  user = userRepository.users[randomNum]
+}
+
+function fetchAllData() {
+  fetchSleepData()
+  // fetchActivityData()
+  // fetchHyrdationData()
+}
+
+function fetchSleepData() {
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+    .then(response => response.json())
+    // .then(data => console.log(data.sleepData))
+    .then(data => {
+      data.sleepData.forEach(sleep => {
+        const sleep1 = new Sleep(sleep, userRepository);
+        sleepData.push(sleep1)
+      });
+    })
+    .then(data => loadSleepFunctions())
+    .catch(err => console.error(err))
+  // .then(data => console.log(sleepData))
+}
+
+// break up into more functions
+function loadSleepFunctions() {
+  // console.log(user)
+  // console.log(userRepository.users)
+  console.log(sleepData[0])
+  let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+  let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+
+  sleepInfoQualityToday.innerText = sleepData.find(sleep => {
+    return sleep.userID === user.id && sleep.date === todayDate;
+  }).sleepQuality;
+
+  sleepUserHoursToday.innerText = sleepData.find(sleep => {
+    return sleep.userID === user.id && sleep.date === todayDate;
+  }).hoursSlept;
+}
+
+
+
+
+
+
+
+
+  activityData.forEach(activity => {
+    activity = new Activity(activity, userRepository);
+  });
+
 
 hydrationData.forEach(hydration => {
   hydration = new Hydration(hydration, userRepository);
 });
 
-sleepData.forEach(sleep => {
-  sleep = new Sleep(sleep, userRepository);
-});
+// sleepData.forEach(sleep => {
+//   sleep = new Sleep(sleep, userRepository);
+// });
 
-let user = userRepository.users[0];
-let todayDate = "2019/09/22";
-user.findFriendsNames(userRepository.users);
+// let user = userRepository.users[0];
+// let todayDate = "2019/09/22";
+// user.findFriendsNames(userRepository.users);
 
 let dailyOz = document.querySelectorAll('.daily-oz');
 let dropdownEmail = document.querySelector('#dropdown-email');
@@ -61,9 +124,9 @@ let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleepe
 let sleepInfoCard = document.querySelector('#sleep-info-card');
 let sleepInfoHoursAverageAlltime = document.querySelector('#sleep-info-hours-average-alltime');
 let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality-average-alltime');
-let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
+// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
 let sleepMainCard = document.querySelector('#sleep-main-card');
-let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
+// let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
 let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
   if (Object.keys(a)[0] > Object.keys(b)[0]) {
     return -1;
@@ -225,13 +288,13 @@ stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
 
 sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
-sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
-}).sleepQuality;
-
-sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  return sleep.userID === user.id && sleep.date === todayDate;
-}).hoursSlept;
+// sleepInfoQualityToday.innerText = sleepData.find(sleep => {
+//   return sleep.userID === user.id && sleep.date === todayDate;
+// }).sleepQuality;
+//
+// sleepUserHoursToday.innerText = sleepData.find(sleep => {
+//   return sleep.userID === user.id && sleep.date === todayDate;
+// }).hoursSlept;
 
 stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 
