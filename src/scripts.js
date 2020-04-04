@@ -1,11 +1,5 @@
 import './css/base.scss';
 import './css/styles.scss';
-
-// import userData from './data/users';
-// import activityData from './data/activity';
-// import sleepData from './data/sleep';
-// import hydrationData from './data/hydration';
-
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';
@@ -16,32 +10,8 @@ let sleepData = []
 let activityData = []
 let hydrationData = []
 let user;
-
-// let user = userRepository.users[0];
 let todayDate = "2019/09/22";
-// let todayDate = "2020/03/15"
-// user.findFriendsNames(userRepository.users);
-
-let activityData = []
-
-
-
-// Promise.all([
-// fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms").then(response => response.json()),
-// fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings").then(response => response.json()),
-// fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/room-services/roomServices").then(response => response.json()),
-// fetch("https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users").then(response => response.json())]
-// ).then(data => makeHotel(data[0].rooms, data[1].bookings, data[2].roomServices, data[3].users))
-//
-// function makeHotel(rooms, bookings, roomServices, users) {
-// hotel = new Hotel(rooms, bookings, roomServices, users)
-// hotel.giveTodaysDate()
-// hotel.giveallUsersBookingsandOrders()
-// displayOrdersToday(hotel.todaysDate)
-// onLoad()
-// }
-
-
+// user.findFriendsNames(userRepository.users)
 Promise.all([
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData').then(response => response.json()),
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData').then(response => response.json()),
@@ -54,9 +24,7 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createSleepInfo(sleepInfo)
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
-  // createVariables()
   displayAllInfo()
-  // createEventListeners()
 
 }
 
@@ -71,7 +39,6 @@ function createUserRepo(userInfo) {
 function assignUser() {
   let randomNum = Math.floor((Math.random() * 49));
   user = userRepository.users[randomNum]
-  console.log(user)
 }
 
 function createSleepInfo(sleepInfo) {
@@ -94,71 +61,7 @@ function createHydrationInfo(hyrdrationInfo) {
     const newHydration = new Hydration(curHydration, userRepository)
     hydrationData.push(newHydration)
   })
-  // console.log(hydrationData[1])
 }
-
-
-// function loadSleepFunctions() {
-//   // console.log(user)
-//   // console.log(userRepository.users)
-//   console.log(sleepData[0])
-//   let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-//   let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-//
-//   sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-//     return sleep.userID === user.id && sleep.date === todayDate;
-//   }).sleepQuality;
-//
-//   sleepUserHoursToday.innerText = sleepData.find(sleep => {
-//     return sleep.userID === user.id && sleep.date === todayDate;
-//   }).hoursSlept;
-// }
-
-
-
-
-
-
-
-
-
-
-// sleepData.forEach(sleep => {
-//   sleep = new Sleep(sleep, userRepository);
-// });
-
-fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-  .then(response => response.json())
-  .then(data => {
-    data.userData.forEach(user => {
-      const people = new User(user);
-      userRepository.users.push(people)
-    })
-  })
-  .then(data => getActivityData())
-  console.log(userRepository.users)
-
-function getActivityData() {
-  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-.then(result => result.json())
-.then(activityInfo => {
-  activityInfo.activityData.forEach(activity => {
-    const activities = new Activity(activity, userRepository);
-    activityData.push(activities)
-  })
-})
-.catch(err => console.error(err));
-}
-
-console.log(activityData);
-//refactor
-let user = userRepository.users[0];
-let todayDate = "2019/09/22";
-user.findFriendsNames(userRepository.users);
-// let user = userRepository.users[0];
-// let todayDate = "2019/09/22";
-// user.findFriendsNames(userRepository.users);
-// function createVariables() {
 
 let dailyOz = document.querySelectorAll('.daily-oz');
 let dropdownEmail = document.querySelector('#dropdown-email');
@@ -225,7 +128,7 @@ let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phras
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
-// }
+
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
@@ -339,13 +242,13 @@ headerName.innerText = `${user.getFirstName()}'S `;
 
 hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
   return hydration.userId === user.id && hydration.date === todayDate;
-}).numOunces;
+}).ounces;
 
 hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
 hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
   return hydration.userId === user.id && hydration.date === todayDate;
-}).numOunces / 8;
+}).ounces / 8;
 
 sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
 
@@ -417,10 +320,9 @@ stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(to
 stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
   return activity.userId === user.id && activity.date === todayDate;
 }).minutesActive;
-
 stepsUserStepsToday.innerText = activityData.find(activity => {
   return activity.userId === user.id && activity.date === todayDate;
-}).numSteps;
+}).steps;
 
 user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
