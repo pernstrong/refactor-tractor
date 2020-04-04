@@ -34,6 +34,20 @@ button:active {
   margin-top: 1.6vw;
   width: 5.6vw;
 }
+#activity-button {
+  background-color: #1F1F1F;
+  color: #FFF;
+  font-size: 5em;
+  background-position: center;
+  // background-size: 5.6vw;
+  border: none;
+  display: inline;
+  float: right;
+  // height: 5vw;
+  margin-right: .5vw;
+  margin-top: .7vw;
+  // width: 5.1vw;
+}
 
 #user-info-dropdown {
   background-color: #1F1F1F;
