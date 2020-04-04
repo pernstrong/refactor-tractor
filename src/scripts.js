@@ -27,6 +27,10 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
   displayAllInfo()
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 }
 
 function createUserRepo(userInfo) {
@@ -40,7 +44,6 @@ function createUserRepo(userInfo) {
 function assignUser() {
   let randomNum = Math.floor((Math.random() * 49));
   user = userRepository.users[randomNum]
-  console.log(user)
 }
 
 function createSleepInfo(sleepInfo) {
@@ -305,11 +308,9 @@ stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(to
 stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
   return activity.userId === user.id && activity.date === todayDate;
 }).minutesActive;
-
 stepsUserStepsToday.innerText = activityData.find(activity => {
   return activity.userId === user.id && activity.date === todayDate;
-}).steps
-
+}).steps;
 
 user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
