@@ -2,7 +2,7 @@ import './css/base.scss';
 import './css/styles.scss';
 
 import userData from './data/users';
-import activityData from './data/activity';
+// import activityData from './data/activity';
 import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 
@@ -13,16 +13,14 @@ import Hydration from './Hydration';
 import Sleep from './Sleep';
 
 
+let activityData = []
+
 
 let userRepository = new UserRepository();
 
 userData.forEach(user => {
   user = new User(user);
   userRepository.users.push(user)
-});
-
-activityData.forEach(activity => {
-  activity = new Activity(activity, userRepository);
 });
 
 hydrationData.forEach(hydration => {
@@ -33,6 +31,31 @@ sleepData.forEach(sleep => {
   sleep = new Sleep(sleep, userRepository);
 });
 
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+  .then(response => response.json())
+  .then(data => {
+    data.userData.forEach(user => {
+      const people = new User(user);
+      userRepository.users.push(people)
+    })
+  })
+  .then(data => getActivityData())
+  console.log(userRepository.users)
+
+function getActivityData() {
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+.then(result => result.json())
+.then(activityInfo => {
+  activityInfo.activityData.forEach(activity => {
+    const activities = new Activity(activity, userRepository);
+    activityData.push(activities)
+  })
+})
+.catch(err => console.error(err));
+}
+
+console.log(activityData);
+//refactor
 let user = userRepository.users[0];
 let todayDate = "2019/09/22";
 user.findFriendsNames(userRepository.users);
@@ -115,7 +138,7 @@ function flipCard(cardToHide, cardToShow) {
 function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
 }
-
+//refactor
 function showInfo() {
   if (event.target.classList.contains('steps-info-button')) {
     flipCard(stepsMainCard, stepsInfoCard);
@@ -172,7 +195,7 @@ function showInfo() {
     flipCard(event.target.parentNode, sleepMainCard);
   }
 }
-
+// refactor combine with updateTrendingStepDays
 function updateTrendingStairsDays() {
   user.findTrendingStairsDays();
   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
