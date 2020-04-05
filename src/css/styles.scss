@@ -57,6 +57,16 @@ button:active {
   z-index: 100;
 }
 
+.new-activity-dropdown {
+  background-color: #1F1F1F;
+  color: white;
+  margin-left: 60%;
+  margin-top: -1.2%;
+  position: relative;
+  text-align: center;
+  z-index: 100;
+}
+
 .dropdown-p {
   font-size: 1.2vw;
   font-weight: 300;
@@ -65,6 +75,44 @@ button:active {
   text-align: center;
   width: 100%;
 }
+
+.dropdown-header{
+ font-size: 5em;
+}
+
+.new-info-container {
+  display: inline-flex;
+}
+
+.activity-tab {
+border: 3px solid grey;
+background-image: url(../images/activity.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: 12vw;
+width: 6vw;
+height: 6vw;
+}
+.sleep-tab {
+border: 3px solid grey;
+background-image: url(../images/sleep.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: 6vw;
+width: 6vw;
+height: 6vw;
+}
+.hydration-tab {
+border: 3px solid grey;
+background-image: url(../images/water-bottle.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: 5vw;
+width: 6vw;
+height: 6vw;
+}
+
+
 
 /* TEXT ELEMENTS */
 h1 {

@@ -18,8 +18,8 @@ Promise.all([
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData').then(response => response.json()),
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData').then(response => response.json()),
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData').then(response => response.json()),
-  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData').then(response => response.json())]
-  ).then(data => createDataSets(data[0].userData, data[1].sleepData, data[2].activityData, data[3].hydrationData))
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData').then(response => response.json())
+]).then(data => createDataSets(data[0].userData, data[1].sleepData, data[2].activityData, data[3].hydrationData))
 
 function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createUserRepo(userInfo)
@@ -44,7 +44,7 @@ function assignUser() {
 
 function createSleepInfo(sleepInfo) {
   sleepInfo.forEach(curSleep => {
-  const newSleep = new Sleep(curSleep, userRepository)
+    const newSleep = new Sleep(curSleep, userRepository)
     sleepData.push(newSleep)
   })
 }
@@ -118,9 +118,12 @@ let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
 let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
 let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
+let activityButton = document.querySelector('#activity-button');
+let activityDropDown = document.querySelector('.new-activity-dropdown')
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
+activityButton.addEventListener('click', displayDropDown)
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 
@@ -131,6 +134,10 @@ function flipCard(cardToHide, cardToShow) {
 
 function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
+}
+
+function displayDropDown() {
+  activityDropDown.classList.toggle('hide')
 }
 
 //refactor
@@ -217,116 +224,146 @@ function displayAllInfo() {
     dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
   }
 
-dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
+  dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
 
-dropdownEmail.innerText = `EMAIL | ${user.email}`;
+  dropdownEmail.innerText = `EMAIL | ${user.email}`;
 
-dropdownName.innerText = user.name.toUpperCase();
+  dropdownName.innerText = user.name.toUpperCase();
 
-headerName.innerText = `${user.getFirstName()}'S `;
+  headerName.innerText = `${user.getFirstName()}'S `;
 
-hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userId === user.id && hydration.date === todayDate;
-}).ounces;
+  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+    return hydration.userId === user.id && hydration.date === todayDate;
+  }).ounces;
 
-hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+  hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
-hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-  return hydration.userId === user.id && hydration.date === todayDate;
-}).ounces / 8;
+  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
+    return hydration.userId === user.id && hydration.date === todayDate;
+  }).ounces / 8;
 
-sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
+  sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
 
-sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
+  sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
-sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getLongestSleepers(todayDate)
-}).getFirstName();
+  sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
+    return user.id === userRepository.getLongestSleepers(todayDate)
+  }).getFirstName();
 
-sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-  return user.id === userRepository.getWorstSleepers(todayDate)
-}).getFirstName();
+  sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
+    return user.id === userRepository.getWorstSleepers(todayDate)
+  }).getFirstName();
 
-sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
+  sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
 
-stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
-  return (activity.date === todayDate && activity.userId === user.id)
-}).calculateMiles(userRepository);
+  stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
+    return (activity.date === todayDate && activity.userId === user.id)
+  }).calculateMiles(userRepository);
 
-sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
+  sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
-sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  return sleep.userId === user.id && sleep.date === todayDate;
-}).sleepQuality;
+  sleepInfoQualityToday.innerText = sleepData.find(sleep => {
+    return sleep.userId === user.id && sleep.date === todayDate;
+  }).sleepQuality;
 
-sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  return sleep.userId === user.id && sleep.date === todayDate;
-}).hoursSlept;
+  sleepUserHoursToday.innerText = sleepData.find(sleep => {
+    return sleep.userId === user.id && sleep.date === todayDate;
+  }).hoursSlept;
 
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+  stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+  stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
 
-stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
+  stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
 
-stairsInfoFlightsToday.innerText = activityData.find(activity => {
-  return activity.userId === user.id && activity.date === todayDate;
-}).flightsOfStairs;
+  stairsInfoFlightsToday.innerText = activityData.find(activity => {
+    return activity.userId === user.id && activity.date === todayDate;
+  }).flightsOfStairs;
 
-stairsUserStairsToday.innerText = activityData.find(activity => {
-  return activity.userId === user.id && activity.date === todayDate;
-}).flightsOfStairs * 12;
+  stairsUserStairsToday.innerText = activityData.find(activity => {
+    return activity.userId === user.id && activity.date === todayDate;
+  }).flightsOfStairs * 12;
 
-stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
+  stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageFlightsThisWeek(todayDate);
 
-stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
+  stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
 
-stairsTrendingButton.addEventListener('click', function() {
-  user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-});
+  stairsTrendingButton.addEventListener('click', function () {
+    user.findTrendingStairsDays();
+    trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+  });
 
-stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
+  stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
 
-stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+  stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
 
-stepsTrendingButton.addEventListener('click', function() {
-  user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-});
+  stepsTrendingButton.addEventListener('click', function () {
+    user.findTrendingStepDays();
+    trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+  });
 
-stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
+  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
 
-stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
+  stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
 
-stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
+  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
 
-stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
-  return activity.userId === user.id && activity.date === todayDate;
-}).minutesActive;
-stepsUserStepsToday.innerText = activityData.find(activity => {
-  return activity.userId === user.id && activity.date === todayDate;
-}).steps;
+  stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
+    return activity.userId === user.id && activity.date === todayDate;
+  }).minutesActive;
+  stepsUserStepsToday.innerText = activityData.find(activity => {
+    return activity.userId === user.id && activity.date === todayDate;
+  }).steps;
 
-user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+  user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
-user.friendsActivityRecords.forEach(friend => {
-  dropdownFriendsStepsContainer.innerHTML += `
+  user.friendsActivityRecords.forEach(friend => {
+    dropdownFriendsStepsContainer.innerHTML += `
   <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
   `;
-});
+  });
 
-let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
+  let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
 
-friendsStepsParagraphs.forEach(paragraph => {
-  if (friendsStepsParagraphs[0] === paragraph) {
-    paragraph.classList.add('green-text');
-  }
-  if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-    paragraph.classList.add('red-text');
-  }
-  if (paragraph.innerText.includes('YOU')) {
-    paragraph.classList.add('yellow-text');
-  }
-});
+  friendsStepsParagraphs.forEach(paragraph => {
+    if (friendsStepsParagraphs[0] === paragraph) {
+      paragraph.classList.add('green-text');
+    }
+    if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
+      paragraph.classList.add('red-text');
+    }
+    if (paragraph.innerText.includes('YOU')) {
+      paragraph.classList.add('yellow-text');
+    }
+  });
 }
+
+
+
+// form for activity
+  /* <form class='drop-down-form'>
+        <legend for="activity-choices">Today's Activity</legend>
+        <label class='steps-walked-title' for="steps-walked">Steps Walked Today</label>
+        <input class='steps-walked-input' type="text" name="steps-walked"></input>
+        <label class='activity-time-time' for="time-of-activity">How Long Did We Run?</label>
+        <input class='activity-time-input' type="text" name='time-of-activity'><input>
+        <label class='stair-amount-title' for="amount-of-stairs">Stair Count?</label>
+        <input class='stair-amount-input' type="text" name='amount-of-stairs'><input>
+        <input type='submit' class='submit-activity'>
+</form> */
+
+/* <form class='drop-down-form'>
+        <legend for="number-of-onces">Hydration!</legend>
+        <label class='ounce-amount-title' for="ounces-drank">How Much Did We Drink Today?</label>
+        <input class='ounce-amount-input' type="text" name="ounces-drank"></input>
+        <input type='submit' class='submit-hydration'>
+</form> */ 
+
+/* <form class='drop-down-form'>
+        <legend for="number-of-onces">SLEEP!</legend>
+        <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
+        <input class='sleep-amount-input' type="text" name="sleep-amount"></input>
+        <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep Between 1-5</label>
+        <input class='sleep-quality-input' type="text" name="sleep-quality"></input>
+        <input type='submit' class='submit-sleep'>
+</form> */
