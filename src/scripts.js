@@ -27,10 +27,6 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
   displayAllInfo()
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 }
 
 function createUserRepo(userInfo) {
