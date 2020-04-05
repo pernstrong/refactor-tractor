@@ -376,3 +376,23 @@ main {
 .yellow-text {
   color: #F8BA00;
 }
+
+.drop-down-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.drop-down-form input {
+width: 33%;
+font-size: 2em;
+}
+.drop-down-form label {
+width: 33%;
+margin-top: 2%;
+font-size: 2em;
+}
+
+.submit-activity {
+  margin-top: 2%;
+}
