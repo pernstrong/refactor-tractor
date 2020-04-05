@@ -47,6 +47,7 @@ function createSleepInfo(sleepInfo) {
     const newSleep = new Sleep(curSleep, userRepository)
     sleepData.push(newSleep)
   })
+  console.log(sleepInfo.length)
 }
 
 function createActivityInfo(activityInfo) {
@@ -122,7 +123,8 @@ let activityButton = document.querySelector('#activity-button');
 let activityDropDown = document.querySelector('.new-activity-dropdown')
 let newInfoContainter = document.querySelector('.new-info-container');
 let displayForm = document.querySelector('.display-form');
-
+let sleepSubmit = $('.submit-sleep')
+// let sleepSubmit = document.querySelector('.submit-sleep')
 
 newInfoContainter.addEventListener('click', determineActvityType);
 mainPage.addEventListener('click', showInfo);
@@ -130,6 +132,22 @@ profileButton.addEventListener('click', showDropdown);
 activityButton.addEventListener('click', displayDropDown)
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
+// sleepSubmit.on('click', postNewSleep)
+displayForm.addEventListener('click', routeDisplayForm)
+
+function routeDisplayForm() {
+  if (event.target.classList.contains('submit-sleep')) {
+    postNewSleep()
+  }
+  // else if (event.target.classList.contains('')) {
+  //
+  // } else if (event.target.classList.contains('')) {
+  //
+  // }
+}
+
+
+
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -382,16 +400,42 @@ function displayHydrationForm() {
 function displaySleepForm() {
   clearDisplayForm();
   displayForm.innerHTML =
-  `<form class='drop-down-form'>
+  `<section class='drop-down-form'>
         <legend for="number-of-onces">SLEEP!</legend>
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
-        <input class='sleep-amount-input' type="text" name="sleep-amount"></input>
+        <input class='sleep-amount-input' type="text" name="sleep-amount" required></input>
         <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep Between 1-5</label>
-        <input class='sleep-quality-input' type="text" name="sleep-quality"></input>
+        <input class='sleep-quality-input' type="text" name="sleep-quality" required></input>
         <input type='submit' class='submit-sleep'>
-  </form>`
+  </section>`
 }
 
 function clearDisplayForm() {
   displayForm.innerHTML = '';
+}
+
+
+function postNewSleep() {
+  // notes: issues with jQuery not working...also had to change from form to section otherwise would not actually post..refresh too fast?
+  let sleepHours = document.querySelector('.sleep-amount-input').value
+  let qualityOfSleep = document.querySelector('.sleep-quality-input').value
+  // let sleepHours = $('.sleep-amount-input').val
+  // let qualityOfSleep = $('.sleep-qualitiy-input').val
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(
+      {
+        userID: user.id,
+        date: todayDate,
+        hoursSlept: sleepHours,
+        sleepQuality: qualityOfSleep
+      }
+    ),
+  })
+  .then(response => response.json())
+  .catch(err => console.error(err))
+  $('.new-activity-dropdown').toggle('hide')
 }
