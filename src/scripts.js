@@ -120,7 +120,11 @@ let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phr
 let userInfoDropdown = document.querySelector('#user-info-dropdown');
 let activityButton = document.querySelector('#activity-button');
 let activityDropDown = document.querySelector('.new-activity-dropdown')
+let newInfoContainter = document.querySelector('.new-info-container');
+let displayForm = document.querySelector('.display-form');
 
+
+newInfoContainter.addEventListener('click', determineActvityType);
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 activityButton.addEventListener('click', displayDropDown)
@@ -339,31 +343,55 @@ function displayAllInfo() {
 }
 
 
-
-// form for activity
-  /* <form class='drop-down-form'>
+function determineActvityType() {
+  if (event.target.classList.contains('activity-tab')) {
+    displayActivityForm()
+  } else if (event.target.classList.contains('sleep-tab')) {
+    displaySleepForm()
+  } else {
+    displayHydrationForm()
+  }
+}
+//form for activity
+function displayActivityForm() {
+  clearDisplayForm();
+  displayForm.innerHTML =
+  `<form class='drop-down-form'>
         <legend for="activity-choices">Today's Activity</legend>
         <label class='steps-walked-title' for="steps-walked">Steps Walked Today</label>
         <input class='steps-walked-input' type="text" name="steps-walked"></input>
-        <label class='activity-time-time' for="time-of-activity">How Long Did We Run?</label>
-        <input class='activity-time-input' type="text" name='time-of-activity'><input>
+        <label class='activity-time-title' for="time-of-activity">How Long Did We Run?</label>
+        <input class='activity-time-input' type="text" name='time-of-activity'></input>
         <label class='stair-amount-title' for="amount-of-stairs">Stair Count?</label>
-        <input class='stair-amount-input' type="text" name='amount-of-stairs'><input>
+        <input class='stair-amount-input' type="text" name='amount-of-stairs'></input>
         <input type='submit' class='submit-activity'>
-</form> */
+  </form>`
+}
 
-/* <form class='drop-down-form'>
+function displayHydrationForm() {
+  clearDisplayForm();
+  displayForm.innerHTML =
+  `<form class='drop-down-form'>
         <legend for="number-of-onces">Hydration!</legend>
         <label class='ounce-amount-title' for="ounces-drank">How Much Did We Drink Today?</label>
         <input class='ounce-amount-input' type="text" name="ounces-drank"></input>
         <input type='submit' class='submit-hydration'>
-</form> */ 
+   </form>`
+}
 
-/* <form class='drop-down-form'>
+function displaySleepForm() {
+  clearDisplayForm();
+  displayForm.innerHTML =
+  `<form class='drop-down-form'>
         <legend for="number-of-onces">SLEEP!</legend>
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
         <input class='sleep-amount-input' type="text" name="sleep-amount"></input>
         <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep Between 1-5</label>
         <input class='sleep-quality-input' type="text" name="sleep-quality"></input>
         <input type='submit' class='submit-sleep'>
-</form> */
+  </form>`
+}
+
+function clearDisplayForm() {
+  displayForm.innerHTML = '';
+}
