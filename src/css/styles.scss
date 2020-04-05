@@ -1,9 +1,9 @@
 *,
 *:after,
 *:before {
-box-sizing: border-box;
-margin: 0;
-padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -34,22 +34,30 @@ button:active {
   margin-top: 1.6vw;
   width: 5.6vw;
 }
+
 #activity-button {
-  background-color: #1F1F1F;
-  color: #FFF;
-  font-size: 5em;
+  background-image: url(../images/add-btn2.png);
   background-position: center;
-  // background-size: 5.6vw;
-  border: none;
-  display: inline;
+  background-size: 5.6vw;
+  border-radius: 50%;
   float: right;
-  // height: 5vw;
-  margin-right: .5vw;
-  margin-top: .7vw;
-  // width: 5.1vw;
+  height: 4.5vw;
+  margin-right: 2vw;
+  margin-top: 2.2%;
+  width: 4.6vw;
 }
 
 #user-info-dropdown {
+  background-color: #1F1F1F;
+  color: white;
+  margin-left: 60%;
+  margin-top: -1.2%;
+  position: relative;
+  text-align: center;
+  z-index: 100;
+}
+
+.new-activity-dropdown {
   background-color: #1F1F1F;
   color: white;
   margin-left: 60%;
@@ -67,6 +75,44 @@ button:active {
   text-align: center;
   width: 100%;
 }
+
+.dropdown-header{
+ font-size: 5em;
+}
+
+.new-info-container {
+  display: inline-flex;
+}
+
+.activity-tab {
+border: 3px solid grey;
+background-image: url(../images/activity.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: 12vw;
+width: 6vw;
+height: 6vw;
+}
+.sleep-tab {
+border: 3px solid grey;
+background-image: url(../images/sleep.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: 6vw;
+width: 6vw;
+height: 6vw;
+}
+.hydration-tab {
+border: 3px solid grey;
+background-image: url(../images/water-bottle.jpg);
+background-position: center;
+background-repeat: no-repeat;
+background-size: 5vw;
+width: 6vw;
+height: 6vw;
+}
+
+
 
 /* TEXT ELEMENTS */
 h1 {
@@ -115,8 +161,8 @@ p {
 main {
   display: grid;
   grid-template-areas:
-  'steps hydration'
-  'stairs sleep';
+    'steps hydration'
+    'stairs sleep';
   height: 100%;
 }
 
