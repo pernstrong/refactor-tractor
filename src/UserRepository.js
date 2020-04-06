@@ -83,18 +83,20 @@ class UserRepository {
     })
   }
   getLongestSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
+    return this.findSleepInfoByDate(date).sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
     })[0].userID;
   }
   getWorstSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
+    return this.findSleepInfoByDate(date).sort((a, b) => {
       return a.hoursSlept - b.hoursSlept;
     })[0].userID;
+  }
+
+  findSleepInfoByDate(date) {
+    return sleepData.filter(sleep => {
+      return sleep.date === date;
+    })
   }
 }
 
