@@ -45,9 +45,11 @@ function assignUser() {
 function createSleepInfo(sleepInfo) {
   sleepInfo.forEach(curSleep => {
     const newSleep = new Sleep(curSleep, userRepository)
-    sleepData.push(newSleep)
+    if (newSleep.hoursSlept !== "" && newSleep.sleepQuality !== "") {
+      sleepData.push(newSleep)
+    }
   })
-  console.log(sleepInfo.length)
+  console.log(sleepData.length)
 }
 
 function createActivityInfo(activityInfo) {
@@ -405,7 +407,7 @@ function displaySleepForm() {
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
         <input class='sleep-amount-input' type="text" name="sleep-amount" required></input>
         <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep Between 1-5</label>
-        <input class='sleep-quality-input' type="text" name="sleep-quality" required></input>
+        <input class='sleep-quality-input' type="text" name="sleep-quality" max="5" required></input>
         <input type='submit' class='submit-sleep'>
   </section>`
 }
