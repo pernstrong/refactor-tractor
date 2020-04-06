@@ -71,16 +71,16 @@ function createHydrationInfo(hyrdrationInfo) {
 // let dropdownGoal = document.querySelector('#dropdown-goal');
 // let dropdownName = document.querySelector('#dropdown-name');
 // let headerName = document.querySelector('#header-name');
-let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
-let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
-let hydrationInfoCard = document.querySelector('#hydration-info-card');
+// let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
+// let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
+// let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
+// let hydrationInfoCard = document.querySelector('#hydration-info-card');
 // let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
 let hydrationMainCard = document.querySelector('#hydration-main-card');
 // let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
 let mainPage = document.querySelector('main');
 let profileButton = document.querySelector('#profile-button');
-let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
+// let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
 // let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
 let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
 let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
@@ -146,6 +146,37 @@ function routeDisplayForm() {
   // }
 }
 
+// replaces variable below and if block in showInfo()
+ // flipCard(hydrationMainCard, hydrationCalendarCard);
+// let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
+$('.hydration-calendar-button').on('click', function() {
+  $('#hydration-calendar-card').toggleClass('hide')
+  $('.hydration-calendar-button').parent().parent().toggleClass('hide')
+})
+
+// replaces variable and if block in ShowInfo()
+// let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
+//   flipCard(hydrationMainCard, hydrationFriendsCard);
+$('.hydration-friends-button').on('click', function() {
+  $('#hydration-friends-card').toggleClass('hide')
+  $('.hydration-friends-button').parent().parent().toggleClass('hide')
+})
+
+// replaces variable and if block in ShowInfo()
+// let hydrationInfoCard = document.querySelector('#hydration-info-card');
+//   flipCard(hydrationMainCard, hydrationInfoCard);
+$('.hydration-info-button').on('click', function() {
+  $('#hydration-info-card').toggleClass('hide')
+  $('.hydration-info-button').parent().parent().toggleClass('hide')
+})
+
+// replaces variable and if block in ShowInfo()
+// let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
+//   flipCard(sleepMainCard, sleepCalendarCard);
+$('.sleep-calendar-button').on('click', function() {
+  $('#sleep-calendar-card').toggleClass('hide');
+  $('.sleep-calendar-button').parent().parent().toggleClass('hide')
+})
 
 
 
@@ -176,15 +207,15 @@ function showInfo() {
   if (event.target.classList.contains('steps-calendar-button')) {
     flipCard(stepsMainCard, stepsCalendarCard);
   }
-  if (event.target.classList.contains('hydration-info-button')) {
-    flipCard(hydrationMainCard, hydrationInfoCard);
-  }
-  if (event.target.classList.contains('hydration-friends-button')) {
-    flipCard(hydrationMainCard, hydrationFriendsCard);
-  }
-  if (event.target.classList.contains('hydration-calendar-button')) {
-    flipCard(hydrationMainCard, hydrationCalendarCard);
-  }
+  // if (event.target.classList.contains('hydration-info-button')) {
+  //   flipCard(hydrationMainCard, hydrationInfoCard);
+  // }
+  // if (event.target.classList.contains('hydration-friends-button')) {
+  //   flipCard(hydrationMainCard, hydrationFriendsCard);
+  // }
+  // if (event.target.classList.contains('hydration-calendar-button')) {
+  //   flipCard(hydrationMainCard, hydrationCalendarCard);
+  // }
   if (event.target.classList.contains('stairs-info-button')) {
     flipCard(stairsMainCard, stairsInfoCard);
   }
@@ -203,9 +234,9 @@ function showInfo() {
   if (event.target.classList.contains('sleep-friends-button')) {
     flipCard(sleepMainCard, sleepFriendsCard);
   }
-  if (event.target.classList.contains('sleep-calendar-button')) {
-    flipCard(sleepMainCard, sleepCalendarCard);
-  }
+  // if (event.target.classList.contains('sleep-calendar-button')) {
+  //   flipCard(sleepMainCard, sleepCalendarCard);
+  // }
   if (event.target.classList.contains('steps-go-back-button')) {
     flipCard(event.target.parentNode, stepsMainCard);
   }
@@ -264,7 +295,8 @@ function displayAllInfo() {
     }).ounces;
   })
 
-  hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+  // hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+  $('#hydration-friend-ounces-today').text(userRepository.calculateAverageDailyWater(todayDate));
 
   // hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
   //   return hydration.userId === userRepository[0].id && hydration.date === todayDate;
