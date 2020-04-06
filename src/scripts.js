@@ -1,6 +1,6 @@
 import './css/base.scss';
 import './css/styles.scss';
-
+import $ from 'jQuery'
 import UserRepository from './UserRepository';
 import User from './User';
 import Activity from './Activity';
@@ -82,7 +82,7 @@ let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
 let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
 let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
 let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-let sleepFriendsCard = document.querySelector('#sleep-friends-card');
+// let sleepFriendsCard = document.querySelector('#sleep-friends-card');
 let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
 let sleepInfoCard = document.querySelector('#sleep-info-card');
 let sleepInfoHoursAverageAlltime = document.querySelector('#sleep-info-hours-average-alltime');
@@ -144,6 +144,13 @@ function displayDropDown() {
   activityDropDown.classList.toggle('hide')
 }
 
+// LN.85
+$('.sleep-friends-button').on('click', function() {
+  $('#sleep-friends-card').toggleClass('hide');
+  $('#sleep-main-card').toggleClass('hide')
+})
+
+
 //refactor
 function showInfo() {
   if (event.target.classList.contains('steps-info-button')) {
@@ -182,9 +189,9 @@ function showInfo() {
   if (event.target.classList.contains('sleep-info-button')) {
     flipCard(sleepMainCard, sleepInfoCard);
   }
-  if (event.target.classList.contains('sleep-friends-button')) {
-    flipCard(sleepMainCard, sleepFriendsCard);
-  }
+  // if (event.target.classList.contains('sleep-friends-button')) {
+  //   flipCard(sleepMainCard, sleepFriendsCard);
+  // }
   if (event.target.classList.contains('sleep-calendar-button')) {
     flipCard(sleepMainCard, sleepCalendarCard);
   }
@@ -356,7 +363,7 @@ function determineActvityType() {
 function displayActivityForm() {
   clearDisplayForm();
   displayForm.innerHTML =
-  `<form class='drop-down-form'>
+    `<form class='drop-down-form'>
         <legend for="activity-choices">Today's Activity</legend>
         <label class='steps-walked-title' for="steps-walked">Steps Walked Today</label>
         <input class='steps-walked-input' type="text" name="steps-walked"></input>
@@ -364,34 +371,55 @@ function displayActivityForm() {
         <input class='activity-time-input' type="text" name='time-of-activity'></input>
         <label class='stair-amount-title' for="amount-of-stairs">Stair Count?</label>
         <input class='stair-amount-input' type="text" name='amount-of-stairs'></input>
-        <input type='submit' class='submit-activity'>
+        <input type='submit' class='submit-activity'></input>
   </form>`
 }
 
 function displayHydrationForm() {
   clearDisplayForm();
   displayForm.innerHTML =
-  `<form class='drop-down-form'>
+    `<section class='drop-down-form'>
         <legend for="number-of-onces">Hydration!</legend>
         <label class='ounce-amount-title' for="ounces-drank">How Much Did We Drink Today?</label>
         <input class='ounce-amount-input' type="text" name="ounces-drank"></input>
-        <input type='submit' class='submit-hydration'>
-   </form>`
+        <input type='submit' class='submit-hydration'></input>
+   </section>`
+  $('.submit-hydration').on('click', function () {
+    let hydration = parseInt($('.ounce-amount-input').val())
+    postHydration(hydration)
+  })
 }
 
 function displaySleepForm() {
   clearDisplayForm();
   displayForm.innerHTML =
-  `<form class='drop-down-form'>
+    `<form class='drop-down-form'>
         <legend for="number-of-onces">SLEEP!</legend>
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
         <input class='sleep-amount-input' type="text" name="sleep-amount"></input>
         <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep Between 1-5</label>
         <input class='sleep-quality-input' type="text" name="sleep-quality"></input>
-        <input type='submit' class='submit-sleep'>
+        <input type='submit' class='submit-sleep'></input>
   </form>`
 }
 
 function clearDisplayForm() {
   displayForm.innerHTML = '';
+}
+
+let postHydration = (hydration) => {
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: user.id,
+        date: todayDate,
+        ounces: hydration
+      })
+    })
+    .then(resolved => resolved.json())
+    .catch(err => console.error(err))
+    $('.new-activity-dropdown').toggleClass('hide')
 }
