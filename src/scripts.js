@@ -54,7 +54,6 @@ function createActivityInfo(activityInfo) {
     const newActivity = new Activity(curActivity, userRepository)
     activityData.push(newActivity)
   })
-  console.log(activityData.length);
 }
 
 function createHydrationInfo(hyrdrationInfo) {
@@ -361,37 +360,39 @@ function determineActvityType() {
 function displayActivityForm() {
   clearDisplayForm();
   $('.display-form').html(
-  `<form class='drop-down-form'>
+  `<section class='drop-down-form'>
         <legend for="activity-choices">Today's Activity</legend>
         <label class='steps-walked-title' for="steps-walked">Steps Walked Today</label>
-        <input class='steps-walked-input' type="text" name="steps-walked"></input>
+        <input class='steps-walked-input' type="number" name="steps-walked"></input>
         <label class='activity-time-title' for="time-of-activity">How Long Did We Run?</label>
-        <input class='activity-time-input' type="text" name='time-of-activity'></input>
+        <input class='activity-time-input' type="number" name='time-of-activity'></input>
         <label class='stair-amount-title' for="amount-of-stairs">Stair Count?</label>
-        <input class='stair-amount-input' type="text" name='amount-of-stairs'></input>
-        <input type='submit' class='submit-activity'>
-  </form>`)
-  $('.submit-activity');
-  $('.steps-walked-input');
-  $('.activity-time-input');
-  $('.stair-amount-input')
-  $('.submit-activity').on('click', function() {
-    addCompletedActivity()
+        <input class='stair-amount-input' type="number" name='amount-of-stairs'></input>
+        <input type='submit' class='submit-activity'></input>
+  </section>`)
+  $('.submit-activity').click(function() {
+    let steps = parseInt($('.steps-walked-input').val())
+    let time = parseInt($('.activity-time-input').val())
+    let stairs = parseInt($('.stair-amount-input').val())
+    addCompletedActivity(steps, time, stairs);
   })
 }
 
+
+
 let addCompletedActivity = (stepsWalked, activityTime, stairAmount) => {
+  $('.new-activity-dropdown').toggle('hide');
 fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({
-    userID: 1,
+    userID: user.id,
     date: "2019/09/22",
-    numSteps: 5,
-    minutesActive: 5,
-    flightsOfStairs: 1
+    numSteps: stepsWalked,
+    minutesActive: activityTime,
+    flightsOfStairs: stairAmount
   })
 }).then(response => console.log(response.json()))
 .catch(err => console.error(err))
