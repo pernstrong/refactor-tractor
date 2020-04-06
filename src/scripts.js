@@ -49,6 +49,8 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
+  console.log(sleepData[sleepData.length - 1])
+
 }
 
 function createActivityInfo(activityInfo) {
@@ -173,10 +175,10 @@ $('.hydration-info-button').on('click', function() {
 // replaces variable and if block in ShowInfo()
 // let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
 //   flipCard(sleepMainCard, sleepCalendarCard);
-$('.sleep-calendar-button').on('click', function() {
-  $('#sleep-calendar-card').toggleClass('hide');
-  $('.sleep-calendar-button').parent().parent().toggleClass('hide')
-})
+// $('.sleep-calendar-button').on('click', function() {
+//   $('#sleep-calendar-card').toggleClass('hide');
+//   $('.sleep-calendar-button').parent().parent().toggleClass('hide')
+// })
 
 
 
@@ -418,6 +420,7 @@ function determineActvityType() {
 //form for activity
 function displayActivityForm() {
   clearDisplayForm();
+  $('.new-activity-dropdown').toggleClass('hide')
   displayForm.innerHTML =
   `<form class='drop-down-form'>
         <legend for="activity-choices">Today's Activity</legend>
@@ -444,14 +447,16 @@ function displayHydrationForm() {
 
 function displaySleepForm() {
   clearDisplayForm();
+  // $('.sleep-amount-input').html()
+  // $('.sleep-quality-input').html()
   displayForm.innerHTML =
   `<section class='drop-down-form'>
         <legend for="number-of-onces">SLEEP!</legend>
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
-        <input class='sleep-amount-input' type="text" name="sleep-amount" required></input>
+        <input class='sleep-amount-input' type="number" name="sleep-amount" required></input>
         <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep (1-5)</label>
-        <input class='sleep-quality-input' type="text" name="sleep-quality" max="5.0" required></input>
-        <input type='submit' class='submit-sleep'>
+        <input class='sleep-quality-input' type="number" name="sleep-quality" max="5.0" required></input>
+        <input type='submit' class='submit-sleep'></input>
   </section>`
 }
 
@@ -461,9 +466,9 @@ function clearDisplayForm() {
 
 
 function postNewSleep() {
-  let sleepAmount = $('.sleep-amount-input').val()
-  let sleepQuality = $('.sleep-quality-input').val()
-  if (sleepAmount > 0 && sleepQuality > 0 && sleepQuality > 1.0 && sleepQuality < 5.001) {
+  let sleepAmount = parseInt($('.sleep-amount-input').val())
+  let sleepQuality = parseInt($('.sleep-quality-input').val())
+  if (sleepAmount > 0 && sleepQuality > 0 && sleepQuality >= 1.0 && sleepQuality < 5.001) {
     fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
       method: 'POST',
       headers: {
@@ -476,12 +481,14 @@ function postNewSleep() {
           hoursSlept: sleepAmount,
           sleepQuality: sleepQuality
         }
-      ),
+      )
     })
     .then(response => response.json())
     .catch(err => console.error(err))
-    $('.new-activity-dropdown').toggle('hide')
   } else {
     window.alert('Please enter Hours Slept and Quality of Sleep (between 1-5)')
   }
+  $('.new-activity-dropdown').toggleClass('hide')
+  $('.sleep-amount-input').val('')
+  $('.sleep-quality-input').val('')
 }
