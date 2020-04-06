@@ -54,6 +54,7 @@ function createActivityInfo(activityInfo) {
     const newActivity = new Activity(curActivity, userRepository)
     activityData.push(newActivity)
   })
+  console.log(activityData.length);
 }
 
 function createHydrationInfo(hyrdrationInfo) {
@@ -122,6 +123,7 @@ let activityButton = document.querySelector('#activity-button');
 let activityDropDown = document.querySelector('.new-activity-dropdown')
 let newInfoContainter = document.querySelector('.new-info-container');
 let displayForm = document.querySelector('.display-form');
+let submitActivityBtn = document.querySelector('.submit-activity')
 
 
 newInfoContainter.addEventListener('click', determineActvityType);
@@ -130,6 +132,8 @@ profileButton.addEventListener('click', showDropdown);
 activityButton.addEventListener('click', displayDropDown)
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
+submitActivityBtn.addEventListener('click', addCompletedActivity);
+
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -367,6 +371,27 @@ function displayActivityForm() {
         <input type='submit' class='submit-activity'>
   </form>`
 }
+
+let addCompletedActivity = () => {
+  console.log(stepsWalkedInput.value);
+  console.log(activityTimeInput.value);
+  console.log(stairAmountInput.value);
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    userID: 1,
+    date: "2019/09/22",
+    numSteps: 5,
+    minutesActive: 5,
+    flightsOfStairs: 1
+  })
+}).then(response => console.log(response.json()))
+.catch(err => console.error(err))
+}
+
 
 function displayHydrationForm() {
   clearDisplayForm();
