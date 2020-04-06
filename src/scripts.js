@@ -49,7 +49,6 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
-  console.log(sleepData.length)
 }
 
 function createActivityInfo(activityInfo) {
@@ -66,23 +65,23 @@ function createHydrationInfo(hyrdrationInfo) {
   })
 }
 
-let dailyOz = document.querySelectorAll('.daily-oz');
-let dropdownEmail = document.querySelector('#dropdown-email');
-let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-let dropdownGoal = document.querySelector('#dropdown-goal');
-let dropdownName = document.querySelector('#dropdown-name');
-let headerName = document.querySelector('#header-name');
+// let dailyOz = document.querySelectorAll('.daily-oz');
+// let dropdownEmail = document.querySelector('#dropdown-email');
+// let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+// let dropdownGoal = document.querySelector('#dropdown-goal');
+// let dropdownName = document.querySelector('#dropdown-name');
+// let headerName = document.querySelector('#header-name');
 let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
 let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
 let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
 let hydrationInfoCard = document.querySelector('#hydration-info-card');
-let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
+// let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
 let hydrationMainCard = document.querySelector('#hydration-main-card');
-let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
+// let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
 let mainPage = document.querySelector('main');
 let profileButton = document.querySelector('#profile-button');
 let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
+// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
 let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
 let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
 let sleepFriendsCard = document.querySelector('#sleep-friends-card');
@@ -125,8 +124,7 @@ let activityButton = document.querySelector('#activity-button');
 let activityDropDown = document.querySelector('.new-activity-dropdown')
 let newInfoContainter = document.querySelector('.new-info-container');
 let displayForm = document.querySelector('.display-form');
-let sleepSubmit = $('.submit-sleep')
-// let sleepSubmit = document.querySelector('.submit-sleep')
+
 
 newInfoContainter.addEventListener('click', determineActvityType);
 mainPage.addEventListener('click', showInfo);
@@ -244,29 +242,42 @@ function displayAllInfo() {
     return 0;
   });
 
-  for (var i = 0; i < dailyOz.length; i++) {
-    dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+  for (var i = 0; i < $('.daily-oz').length; i++) {
+    $('.daily-oz')[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
   }
 
-  dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
+  $('#dropdown-goal').text(`DAILY STEP GOAL | ${user.dailyStepGoal}`);
 
-  dropdownEmail.innerText = `EMAIL | ${user.email}`;
+  $('#dropdown-email').text(`EMAIL | ${user.email}`);
 
-  dropdownName.innerText = user.name.toUpperCase();
+  $('#dropdown-name').text(user.name.toUpperCase());
 
-  headerName.innerText = `${user.getFirstName()}'S `;
+  $('#header-name').prepend(`${user.getFirstName()}'S `)
 
-  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-    return hydration.userId === user.id && hydration.date === todayDate;
-  }).ounces;
+  // hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+  //   return hydration.userId === user.id && hydration.date === todayDate;
+  // }).ounces;
+
+  $('#hydration-user-ounces-today').text(function() {
+      return hydrationData.find(hydration => {
+      return hydration.userId === user.id && hydration.date === todayDate;
+    }).ounces;
+  })
 
   hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
 
-  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-    return hydration.userId === user.id && hydration.date === todayDate;
-  }).ounces / 8;
+  // hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
+  //   return hydration.userId === userRepository[0].id && hydration.date === todayDate;
+  // }).ounces / 8;
 
-  sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
+  $('#hydration-info-glasses-today').text(function() {
+      return hydrationData.find(hydration => {
+        return hydration.userId === user.id && hydration.date === todayDate;
+    }).ounces / 8
+  })
+
+  // sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
+  $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
 
   sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
@@ -342,9 +353,9 @@ function displayAllInfo() {
   user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
   user.friendsActivityRecords.forEach(friend => {
-    dropdownFriendsStepsContainer.innerHTML += `
+    $('#dropdown-friends-steps-container').append(`
   <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-  `;
+  `);
   });
 
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
@@ -406,8 +417,8 @@ function displaySleepForm() {
         <legend for="number-of-onces">SLEEP!</legend>
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
         <input class='sleep-amount-input' type="text" name="sleep-amount" required></input>
-        <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep Between 1-5</label>
-        <input class='sleep-quality-input' type="text" name="sleep-quality" max="5" required></input>
+        <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep (1-5)</label>
+        <input class='sleep-quality-input' type="text" name="sleep-quality" max="5.0" required></input>
         <input type='submit' class='submit-sleep'>
   </section>`
 }
@@ -418,26 +429,27 @@ function clearDisplayForm() {
 
 
 function postNewSleep() {
-  // notes: issues with jQuery not working...also had to change from form to section otherwise would not actually post..refresh too fast?
-  let sleepHours = document.querySelector('.sleep-amount-input').value
-  let qualityOfSleep = document.querySelector('.sleep-quality-input').value
-  // let sleepHours = $('.sleep-amount-input').val
-  // let qualityOfSleep = $('.sleep-qualitiy-input').val
-  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(
-      {
-        userID: user.id,
-        date: todayDate,
-        hoursSlept: sleepHours,
-        sleepQuality: qualityOfSleep
-      }
-    ),
-  })
-  .then(response => response.json())
-  .catch(err => console.error(err))
-  $('.new-activity-dropdown').toggle('hide')
+  let sleepAmount = $('.sleep-amount-input').val()
+  let sleepQuality = $('.sleep-quality-input').val()
+  if (sleepAmount > 0 && sleepQuality > 0 && sleepQuality > 1.0 && sleepQuality < 5.001) {
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          userID: user.id,
+          date: todayDate,
+          hoursSlept: sleepAmount,
+          sleepQuality: sleepQuality
+        }
+      ),
+    })
+    .then(response => response.json())
+    .catch(err => console.error(err))
+    $('.new-activity-dropdown').toggle('hide')
+  } else {
+    window.alert('Please enter Hours Slept and Quality of Sleep (between 1-5)')
+  }
 }
