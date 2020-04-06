@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset='UTF-8'>
@@ -147,102 +147,107 @@
     </section>
     <section class='card-container' id='stairs-card-container'>
       <section class='main-card' id='stairs-main-card'>
-        <div class='main-card-top-row'>
-          <button type='button' name='button' class='info-button stairs-info-button'></button>
+        <section class='main-card-top-row'>
+          <button type='button' name='button' class='info-button stairs-info-button' aria-label="show stairs info"></button>
           <h3>YOU HAVE CLIMBED</h3>
-          <button type='button' name='button' class='friends-button stairs-friends-button'></button>
-        </div>
+          <button type='button' name='button' class='friends-button stairs-friends-button' aria-label="show info for friends stairs"></button>
+        </section>
         <h2 id='stairs-user-stairs-today'></h2>
-        <div class='main-card-top-row'>
-          <button type='button' name='button' class='trending-button stairs-trending-button'></button>
+        <section class='main-card-top-row'>
+          <button type='button' name='button' class='trending-button stairs-trending-button' aria-label="show trending stairs info"></button>
           <h3>STAIRS TODAY</h3>
-          <button type='button' name='button' class='calendar-button stairs-calendar-button'></button>
-        </div>
+          <button type='button' name='button' class='calendar-button stairs-calendar-button' aria-label="show stairs weekly stats"></button>
+        </section>
       </section>
       <section class='info-card hide' id='stairs-info-card'>
-        <button type='button' name='button' class='go-back-button stairs-go-back-button'></button>
-        <div class='card-data-line'>
+        <button type='button' name='button' class='go-back-button stairs-go-back-button' aria-label="return to stairs main"></button>
+        <section class='card-data-line'>
           <p>FLIGHTS CLIMBED TODAY</p>
           <h4 id='stairs-info-flights-today'></h4>
-        </div>
+        </section>
       </section>
       <section class='friends-card hide' id='stairs-friends-card'>
-        <button type='button' name='button' class='go-back-button stairs-go-back-button'></button>
-        <div class='card-data-line'>
+        <button type='button' name='button' class='go-back-button stairs-go-back-button' aria-label="return to stairs main"></button>
+        <section class='card-data-line'>
           <p>ALL USERS' AVERAGE FLIGHTS TODAY</p>
           <h4 id='stairs-friend-flights-average-today'></h4>
-        </div>
+        </section>
       </section>
       <section class='trending-card hide' id='stairs-trending-card'>
-        <button type='button' name='button' class='go-back-button stairs-go-back-button'></button>
-        <div class='card-data-line trending-stairs-phrase-container'>
-        </div>
+        <button type='button' name='button' class='go-back-button stairs-go-back-button' aria-label="return to stairs main"></button>
+        <section class='card-data-line trending-stairs-phrase-container'>
+        </section>
       </section>
       <section class='calendar-card hide' id='stairs-calendar-card'>
-        <button type='button' name='button' class='go-back-button stairs-go-back-button'></button>
-        <div class='card-data-line'>
+        <button type='button' name='button' class='go-back-button stairs-go-back-button' aria-label="return to stairs main"></button>
+        <section class='card-data-line'>
           <p>YOUR WEEKLY FLIGHTS CLIMBED</p>
           <h4 id='stairs-calendar-flights-average-weekly'></h4>
-        </div>
-        <div class='card-data-line'>
+        </section>
+        <section class='card-data-line'>
           <p>YOUR WEEKLY STAIRS CLIMBED</p>
           <h4 id='stairs-calendar-stairs-average-weekly'></h4>
-        </div>
+        </section>
       </section>
     </section>
     <section class='card-container' id='sleep-card-container'>
       <section class='main-card' id='sleep-main-card'>
-        <div class='main-card-top-row'>
-          <button type='button' name='button' class='info-button sleep-info-button'></button>
+        <section class='main-card-top-row'>
+          <button type='button' name='button' class='info-button sleep-info-button' aria-label="sleep info"></button>
           <h3>YOU SLEPT</h3>
-          <button type='button' name='button' class='friends-button sleep-friends-button'></button>
-        </div>
+          <button type='button' name='button' class='friends-button sleep-friends-button' aria-label="see friends sleep info"></button>
+        </section>
         <h2 id='sleep-user-hours-today'></h2>
-        <div class='main-card-bottom-row'>
+        <section class='main-card-bottom-row'>
           <h3>HOURS LAST NIGHT</h3>
-          <button type='button' name='button' class='calendar-button sleep-calendar-button'></button>
-        </div>
+          <button type='button' name='button' class='calendar-button sleep-calendar-button' aria-label="see sleep trending info"></button>
+        </section>
       </section>
       <section class='info-card hide' id='sleep-info-card'>
-        <button type='button' name='button' class='go-back-button sleep-go-back-button'></button>
-        <div class='card-data-line'>
+        <button type='button' name='button' class='go-back-button sleep-go-back-button' aria-label="return to sleep main"></button>
+        <section class='card-data-line'>
           <p>SLEEP QUALITY LAST NIGHT</p>
           <h4 id='sleep-info-quality-today'></h4>
-        </div>
-        <div class='card-data-line'>
+        </section>
+        <section class='card-data-line'>
           <p>OVERALL NUMBER OF HOURS AVERAGE</p>
           <h4 id='sleep-info-hours-average-alltime'></h4>
-        </div>
-        <div class='card-data-line'>
+        </section>
+        <section class='card-data-line'>
           <p>OVERALL SLEEP QUALITY AVERAGE</p>
           <h4 id='sleep-info-quality-average-alltime'></h4>
-        </div>
+        </section>
       </section>
       <section class='friends-card hide' id='sleep-friends-card'>
-        <button type='button' name='button' class='go-back-button sleep-go-back-button'></button>
-        <div class='card-data-line'>
+        <button type='button' name='button' class='go-back-button sleep-go-back-button' aria-label="return to sleep main"></button>
+        <section class='card-data-line'>
           <p>LAST NIGHT'S SUPERIOR SLEEPER</p>
           <h4 id='sleep-friend-longest-sleeper'></h4>
-        </div>
-        <div class='card-data-line'>
+        </section>
+        <section class='card-data-line'>
           <p>LAST NIGHT'S INFERIOR SLEEPER</p>
           <h4 id='sleep-friend-worst-sleeper'></h4>
-        </div>
+        </section>
       </section>
       <section class='calendar-card hide' id='sleep-calendar-card'>
-        <button type='button' name='button' class='go-back-button sleep-go-back-button'></button>
-        <div class='card-data-line'>
+        <button type='button' name='button' class='go-back-button sleep-go-back-button' aria-label="return to sleep main"></button>
+        <section class='card-data-line'>
           <p>LAST WEEK'S HOURLY AVERAGE</p>
           <h4 id='sleep-calendar-hours-average-weekly'></h4>
-        </div>
-        <div class='card-data-line'>
+        </section>
+        <section class='card-data-line'>
           <p>LAST WEEK'S QUALITY AVERAGE</p>
           <h4 id='sleep-calendar-quality-average-weekly'></h4>
-        </div>
+        </section>
       </section>
     </section>
   </main>
+<<<<<<< HEAD
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="path/to/your/jquery.min.js"><\/script>')</script>
+=======
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="path/to/your/jquery.min.js"><\/script>')</script>
+>>>>>>> master
 </body>
 </html>

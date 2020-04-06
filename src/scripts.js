@@ -45,8 +45,12 @@ function assignUser() {
 function createSleepInfo(sleepInfo) {
   sleepInfo.forEach(curSleep => {
     const newSleep = new Sleep(curSleep, userRepository)
-    sleepData.push(newSleep)
+    if (newSleep.hoursSlept !== "" && newSleep.sleepQuality !== "") {
+      sleepData.push(newSleep)
+    }
   })
+  console.log(sleepData[sleepData.length - 1])
+
 }
 
 function createActivityInfo(activityInfo) {
@@ -63,23 +67,23 @@ function createHydrationInfo(hyrdrationInfo) {
   })
 }
 
-let dailyOz = document.querySelectorAll('.daily-oz');
-let dropdownEmail = document.querySelector('#dropdown-email');
-let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-let dropdownGoal = document.querySelector('#dropdown-goal');
-let dropdownName = document.querySelector('#dropdown-name');
-let headerName = document.querySelector('#header-name');
-let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
-let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
-let hydrationInfoCard = document.querySelector('#hydration-info-card');
-let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
+// let dailyOz = document.querySelectorAll('.daily-oz');
+// let dropdownEmail = document.querySelector('#dropdown-email');
+// let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
+// let dropdownGoal = document.querySelector('#dropdown-goal');
+// let dropdownName = document.querySelector('#dropdown-name');
+// let headerName = document.querySelector('#header-name');
+// let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
+// let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
+// let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
+// let hydrationInfoCard = document.querySelector('#hydration-info-card');
+// let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
 let hydrationMainCard = document.querySelector('#hydration-main-card');
-let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
+// let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
 let mainPage = document.querySelector('main');
 let profileButton = document.querySelector('#profile-button');
-let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
+// let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
+// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
 let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
 let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
 // let sleepFriendsCard = document.querySelector('#sleep-friends-card');
@@ -129,9 +133,48 @@ $('#activity-button').on('click', function() {
   displayDropDown()
 })
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
-$('.steps-trending-button').on('click', function() {
-  updateTrendingStepDays()
-});
+// stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
+// sleepSubmit.on('click', postNewSleep)
+// displayForm.addEventListener('click', routeDisplayForm)
+
+function routeDisplayForm() {
+  if (event.target.classList.contains('submit-sleep')) {
+    postNewSleep()
+  }
+}
+
+
+// replaces variable below and if block in showInfo()
+ // flipCard(hydrationMainCard, hydrationCalendarCard);
+// let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
+$('.hydration-calendar-button').on('click', function() {
+  $('#hydration-calendar-card').toggleClass('hide')
+  $('.hydration-calendar-button').parent().parent().toggleClass('hide')
+})
+
+// replaces variable and if block in ShowInfo()
+// let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
+//   flipCard(hydrationMainCard, hydrationFriendsCard);
+$('.hydration-friends-button').on('click', function() {
+  $('#hydration-friends-card').toggleClass('hide')
+  $('.hydration-friends-button').parent().parent().toggleClass('hide')
+})
+
+// replaces variable and if block in ShowInfo()
+// let hydrationInfoCard = document.querySelector('#hydration-info-card');
+//   flipCard(hydrationMainCard, hydrationInfoCard);
+$('.hydration-info-button').on('click', function() {
+  $('#hydration-info-card').toggleClass('hide')
+  $('.hydration-info-button').parent().parent().toggleClass('hide')
+})
+
+// replaces variable and if block in ShowInfo()
+// let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
+//   flipCard(sleepMainCard, sleepCalendarCard);
+// $('.sleep-calendar-button').on('click', function() {
+//   $('#sleep-calendar-card').toggleClass('hide');
+//   $('.sleep-calendar-button').parent().parent().toggleClass('hide')
+// })
 
 
 
@@ -169,15 +212,15 @@ function showInfo() {
   if (event.target.classList.contains('steps-calendar-button')) {
     flipCard(stepsMainCard, stepsCalendarCard);
   }
-  if (event.target.classList.contains('hydration-info-button')) {
-    flipCard(hydrationMainCard, hydrationInfoCard);
-  }
-  if (event.target.classList.contains('hydration-friends-button')) {
-    flipCard(hydrationMainCard, hydrationFriendsCard);
-  }
-  if (event.target.classList.contains('hydration-calendar-button')) {
-    flipCard(hydrationMainCard, hydrationCalendarCard);
-  }
+  // if (event.target.classList.contains('hydration-info-button')) {
+  //   flipCard(hydrationMainCard, hydrationInfoCard);
+  // }
+  // if (event.target.classList.contains('hydration-friends-button')) {
+  //   flipCard(hydrationMainCard, hydrationFriendsCard);
+  // }
+  // if (event.target.classList.contains('hydration-calendar-button')) {
+  //   flipCard(hydrationMainCard, hydrationCalendarCard);
+  // }
   if (event.target.classList.contains('stairs-info-button')) {
     flipCard(stairsMainCard, stairsInfoCard);
   }
@@ -193,12 +236,19 @@ function showInfo() {
   if (event.target.classList.contains('sleep-info-button')) {
     flipCard(sleepMainCard, sleepInfoCard);
   }
+
+  if (event.target.classList.contains('sleep-friends-button')) {
+    flipCard(sleepMainCard, sleepFriendsCard);
+  }
+  // if (event.target.classList.contains('sleep-calendar-button')) {
+  //   flipCard(sleepMainCard, sleepCalendarCard);
+  // }
   // if (event.target.classList.contains('sleep-friends-button')) {
   //   flipCard(sleepMainCard, sleepFriendsCard);
   // }
-  if (event.target.classList.contains('sleep-calendar-button')) {
-    flipCard(sleepMainCard, sleepCalendarCard);
-  }
+  // if (event.target.classList.contains('sleep-calendar-button')) {
+    // flipCard(sleepMainCard, sleepCalendarCard);
+  // }
   if (event.target.classList.contains('steps-go-back-button')) {
     flipCard(event.target.parentNode, stepsMainCard);
   }
@@ -235,29 +285,43 @@ function displayAllInfo() {
     return 0;
   });
 
-  for (var i = 0; i < dailyOz.length; i++) {
-    dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+  for (var i = 0; i < $('.daily-oz').length; i++) {
+    $('.daily-oz')[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
   }
 
-  dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
+  $('#dropdown-goal').text(`DAILY STEP GOAL | ${user.dailyStepGoal}`);
 
-  dropdownEmail.innerText = `EMAIL | ${user.email}`;
+  $('#dropdown-email').text(`EMAIL | ${user.email}`);
 
-  dropdownName.innerText = user.name.toUpperCase();
+  $('#dropdown-name').text(user.name.toUpperCase());
 
-  headerName.innerText = `${user.getFirstName()}'S `;
+  $('#header-name').prepend(`${user.getFirstName()}'S `)
 
-  hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-    return hydration.userId === user.id && hydration.date === todayDate;
-  }).ounces;
+  // hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
+  //   return hydration.userId === user.id && hydration.date === todayDate;
+  // }).ounces;
 
-  hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+  $('#hydration-user-ounces-today').text(function() {
+      return hydrationData.find(hydration => {
+      return hydration.userId === user.id && hydration.date === todayDate;
+    }).ounces;
+  })
 
-  hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
-    return hydration.userId === user.id && hydration.date === todayDate;
-  }).ounces / 8;
+  // hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
+  $('#hydration-friend-ounces-today').text(userRepository.calculateAverageDailyWater(todayDate));
 
-  sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
+  // hydrationInfoGlassesToday.innerText = hydrationData.find(hydration => {
+  //   return hydration.userId === userRepository[0].id && hydration.date === todayDate;
+  // }).ounces / 8;
+
+  $('#hydration-info-glasses-today').text(function() {
+      return hydrationData.find(hydration => {
+        return hydration.userId === user.id && hydration.date === todayDate;
+    }).ounces / 8
+  })
+
+  // sleepCalendarHoursAverageWeekly.innerText = user.calculateAverageHoursThisWeek(todayDate);
+  $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
 
   sleepCalendarQualityAverageWeekly.innerText = user.calculateAverageQualityThisWeek(todayDate);
 
@@ -333,9 +397,9 @@ function displayAllInfo() {
   user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
   user.friendsActivityRecords.forEach(friend => {
-    dropdownFriendsStepsContainer.innerHTML += `
+    $('#dropdown-friends-steps-container').append(`
   <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-  `;
+  `);
   });
 
   let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
@@ -366,6 +430,7 @@ function determineActvityType() {
 
 function displayActivityForm() {
   clearDisplayForm();
+$('.new-activity-dropdown').toggleClass('hide')
   $('.display-form').html(
   `<section class='drop-down-form'>
         <legend for="activity-choices">Today's Activity</legend>
@@ -408,13 +473,13 @@ fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', 
 
 function displayHydrationForm() {
   clearDisplayForm();
-  $('.display-form').innerHTML =
+  $('.display-form').html(
   `<section class='drop-down-form'>
         <legend for="number-of-onces">Hydration!</legend>
         <label class='ounce-amount-title' for="ounces-drank">How Much Did We Drink Today?</label>
         <input class='ounce-amount-input' type="text" name="ounces-drank"></input>
         <input type='submit' class='submit-hydration'></input>
-   </section>`
+   </section>`)
   $('.submit-hydration').on('click', function () {
     let hydration = parseInt($('.ounce-amount-input').val())
     postHydration(hydration)
@@ -423,16 +488,18 @@ function displayHydrationForm() {
 
 function displaySleepForm() {
   clearDisplayForm();
-  $('.display-form').innerHTML =
-  `<form class='drop-down-form'>
+  // $('.sleep-amount-input').html()
+  // $('.sleep-quality-input').html()
+  $('.display-form').html(
+  `<section class='drop-down-form'>
         <legend for="number-of-onces">SLEEP!</legend>
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
-        <input class='sleep-amount-input' type="text" name="sleep-amount"></input>
-        <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep Between 1-5</label>
-        <input class='sleep-quality-input' type="text" name="sleep-quality"></input>
+        <input class='sleep-amount-input' type="number" name="sleep-amount" required></input>
+        <label class='sleep-quality-title' for="sleep-quality">Quality of Sleep (1-5)</label>
+        <input class='sleep-quality-input' type="number" name="sleep-quality" max="5.0" required></input>
         <input type='submit' class='submit-sleep'></input>
-  </form>`
-}
+  </section>`
+)}
 
 function clearDisplayForm() {
   $('.display-form').innerHTML = '';
@@ -453,4 +520,33 @@ let postHydration = (hydration) => {
     .then(resolved => resolved.json())
     .catch(err => console.error(err))
     $('.new-activity-dropdown').toggleClass('hide')
+}
+
+
+function postNewSleep() {
+  let sleepAmount = parseInt($('.sleep-amount-input').val())
+  let sleepQuality = parseInt($('.sleep-quality-input').val())
+  if (sleepAmount > 0 && sleepQuality > 0 && sleepQuality >= 1.0 && sleepQuality < 5.001) {
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(
+        {
+          userID: user.id,
+          date: todayDate,
+          hoursSlept: sleepAmount,
+          sleepQuality: sleepQuality
+        }
+      )
+    })
+    .then(response => response.json())
+    .catch(err => console.error(err))
+  } else {
+    window.alert('Please enter Hours Slept and Quality of Sleep (between 1-5)')
+  }
+  $('.new-activity-dropdown').toggleClass('hide')
+  $('.sleep-amount-input').val('')
+  $('.sleep-quality-input').val('')
 }
