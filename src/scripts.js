@@ -107,29 +107,33 @@ let stairsTrendingButton = document.querySelector('.stairs-trending-button');
 let stairsTrendingCard = document.querySelector('#stairs-trending-card');
 let stairsUserStairsToday = document.querySelector('#stairs-user-stairs-today');
 let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
-let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
-let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
-let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
-let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
-let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
-let stepsTrendingButton = document.querySelector('.steps-trending-button');
-let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
-let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
-let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-let userInfoDropdown = document.querySelector('#user-info-dropdown');
-let activityButton = document.querySelector('#activity-button');
-let activityDropDown = document.querySelector('.new-activity-dropdown')
-let newInfoContainter = document.querySelector('.new-info-container');
-let displayForm = document.querySelector('.display-form');
+// let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
+// let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
+// let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
+// let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
+// let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
+// let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
+// let stepsTrendingButton = document.querySelector('.steps-trending-button');
+// let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
+// let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
+// let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
+// let userInfoDropdown = document.querySelector('#user-info-dropdown');
 
 
-newInfoContainter.addEventListener('click', determineActvityType);
+$('.new-info-container').on('click', function() {
+  determineActvityType()
+});
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-activityButton.addEventListener('click', displayDropDown)
+$('#activity-button').on('click', function() {
+  displayDropDown()
+})
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
+$('.steps-trending-button').on('click', function() {
+  updateTrendingStepDays()
+});
+
+
 
 function flipCard(cardToHide, cardToShow) {
   cardToHide.classList.add('hide');
@@ -137,11 +141,11 @@ function flipCard(cardToHide, cardToShow) {
 }
 
 function showDropdown() {
-  userInfoDropdown.classList.toggle('hide');
+  $('#user-info-dropdown').toggle('hide');
 }
-
+//buggy
 function displayDropDown() {
-  activityDropDown.classList.toggle('hide')
+  $('.new-activity-dropdown').toggle('hide')
 }
 
 // LN.85
@@ -211,12 +215,12 @@ function showInfo() {
 // refactor combine with updateTrendingStepDays
 function updateTrendingStairsDays() {
   user.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+  $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
 }
 
 function updateTrendingStepDays() {
   user.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+  $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
 }
 
 function displayAllInfo() {
@@ -267,9 +271,9 @@ function displayAllInfo() {
 
   sleepInfoHoursAverageAlltime.innerText = user.hoursSleptAverage;
 
-  stepsInfoMilesWalkedToday.innerText = user.activityRecord.find(activity => {
+  $('#steps-info-miles-walked-today').text(user.activityRecord.find(activity => {
     return (activity.date === todayDate && activity.userId === user.id)
-  }).calculateMiles(userRepository);
+  }).calculateMiles(userRepository));
 
   sleepInfoQualityAverageAlltime.innerText = user.sleepQualityAverage;
 
@@ -301,30 +305,30 @@ function displayAllInfo() {
 
   stairsTrendingButton.addEventListener('click', function () {
     user.findTrendingStairsDays();
-    trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
+    $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
   });
 
   stepsCalendarTotalActiveMinutesWeekly.innerText = user.calculateAverageMinutesActiveThisWeek(todayDate);
 
-  stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+  $('#steps-calendar-total-steps-weekly').text(user.calculateAverageStepsThisWeek(todayDate));
 
-  stepsTrendingButton.addEventListener('click', function () {
+  $('.steps-trending-button').on('click', function () {
     user.findTrendingStepDays();
-    trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
+    $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
   });
 
-  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
+  $('#steps-friend-active-minutes-average-today').text(userRepository.calculateAverageMinutesActive(todayDate));
 
-  stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
+  $('#steps-friend-average-step-goal').text(`${userRepository.calculateAverageStepGoal()}`);
 
-  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
+  $('#steps-friend-steps-average-today').text(userRepository.calculateAverageSteps(todayDate));
 
-  stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
+  $('#steps-info-active-minutes-today').text(activityData.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
-  }).minutesActive;
-  stepsUserStepsToday.innerText = activityData.find(activity => {
+  }).minutesActive);
+  $('#steps-user-steps-today').text(activityData.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
-  }).steps;
+  }).steps);
 
   user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
@@ -359,26 +363,53 @@ function determineActvityType() {
     displayHydrationForm()
   }
 }
-//form for activity
+
 function displayActivityForm() {
   clearDisplayForm();
-  displayForm.innerHTML =
-    `<form class='drop-down-form'>
+  $('.display-form').html(
+  `<section class='drop-down-form'>
         <legend for="activity-choices">Today's Activity</legend>
         <label class='steps-walked-title' for="steps-walked">Steps Walked Today</label>
-        <input class='steps-walked-input' type="text" name="steps-walked"></input>
+        <input class='steps-walked-input' type="number" name="steps-walked"></input>
         <label class='activity-time-title' for="time-of-activity">How Long Did We Run?</label>
-        <input class='activity-time-input' type="text" name='time-of-activity'></input>
+        <input class='activity-time-input' type="number" name='time-of-activity'></input>
         <label class='stair-amount-title' for="amount-of-stairs">Stair Count?</label>
-        <input class='stair-amount-input' type="text" name='amount-of-stairs'></input>
+        <input class='stair-amount-input' type="number" name='amount-of-stairs'></input>
         <input type='submit' class='submit-activity'></input>
-  </form>`
+  </section>`)
+  $('.submit-activity').click(function() {
+    let steps = parseInt($('.steps-walked-input').val())
+    let time = parseInt($('.activity-time-input').val())
+    let stairs = parseInt($('.stair-amount-input').val())
+    addCompletedActivity(steps, time, stairs);
+  })
 }
+
+
+
+let addCompletedActivity = (stepsWalked, activityTime, stairAmount) => {
+  $('.new-activity-dropdown').toggle('hide');
+fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    userID: user.id,
+    date: "2019/09/22",
+    numSteps: stepsWalked,
+    minutesActive: activityTime,
+    flightsOfStairs: stairAmount
+  })
+}).then(response => console.log(response.json()))
+.catch(err => console.error(err))
+}
+
 
 function displayHydrationForm() {
   clearDisplayForm();
-  displayForm.innerHTML =
-    `<section class='drop-down-form'>
+  $('.display-form').innerHTML =
+  `<section class='drop-down-form'>
         <legend for="number-of-onces">Hydration!</legend>
         <label class='ounce-amount-title' for="ounces-drank">How Much Did We Drink Today?</label>
         <input class='ounce-amount-input' type="text" name="ounces-drank"></input>
@@ -392,8 +423,8 @@ function displayHydrationForm() {
 
 function displaySleepForm() {
   clearDisplayForm();
-  displayForm.innerHTML =
-    `<form class='drop-down-form'>
+  $('.display-form').innerHTML =
+  `<form class='drop-down-form'>
         <legend for="number-of-onces">SLEEP!</legend>
         <label class='sleep-amount-title' for="sleep-amount">How Much Did We Get?</label>
         <input class='sleep-amount-input' type="text" name="sleep-amount"></input>
@@ -404,7 +435,7 @@ function displaySleepForm() {
 }
 
 function clearDisplayForm() {
-  displayForm.innerHTML = '';
+  $('.display-form').innerHTML = '';
 }
 
 let postHydration = (hydration) => {
