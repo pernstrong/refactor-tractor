@@ -75,12 +75,7 @@ $('#activity-button').on('click', function () {
   displayDropDown()
 })
 
-// ????????????????????????????????????
 $('.stairs-trending-button').on('click', updateTrendingStairsDays);
-// stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
-// sleepSubmit.on('click', postNewSleep)
-// displayForm.addEventListener('click', routeDisplayForm)
-// ?????????????????????????????????????
 
 function routeDisplayForm() {
   if (event.target.classList.contains('submit-sleep')) {
@@ -88,10 +83,7 @@ function routeDisplayForm() {
   }
 }
 
-function flipCard(cardToHide, cardToShow) {
-  cardToHide.classList.add('hide');
-  cardToShow.classList.remove('hide');
-}
+
 
 function showDropdown() {
   $('#user-info-dropdown').toggle('hide');
@@ -123,19 +115,29 @@ $('.steps-trending-button').on('click', function () {
   $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
 });
 
-$('.hydration-info-button').on('click', function () {
-  $('#hydration-info-card').toggleClass('hide')
-  $('.hydration-info-button').parent().parent().toggleClass('hide')
-})
+  $('.hydration-info-button').on('click', function() {
+    $('#hydration-info-card').toggleClass('hide')
+    $('.hydration-info-button').parent().parent().toggleClass('hide')
+  })
 
-$('.hydration-friends-button').on('click', function () {
+  $('.hydration-friends-button').on('click', function() {
   $('#hydration-friends-card').toggleClass('hide')
   $('.hydration-friends-button').parent().parent().toggleClass('hide')
 })
 
-$('.hydration-calendar-button').on('click', function () {
+$('.hydration-calendar-button').on('click', function() {
   $('#hydration-calendar-card').toggleClass('hide')
   $('.hydration-calendar-button').parent().parent().toggleClass('hide')
+})
+
+$('.stairs-info-button').click(function () {
+  $('#stairs-info-card').toggleClass('hide')
+  $('#stairs-main-card').toggleClass('hide')
+})
+
+$('.stairs-friends-button').on('click', function() {
+  $('#stairs-friends-card').toggleClass('hide')
+  $('.stairs-friends-button').parent().parent().toggleClass('hide')
 })
 
 $('.stairs-calendar-button').on('click', function() {
@@ -143,10 +145,12 @@ $('.stairs-calendar-button').on('click', function() {
   $('#stairs-main-card').toggleClass('hide')
 })
 
-$('.stairs-trending-button').on('click', function () {
+$('.stairs-trending-button').click(function() {
   user.findTrendingStairsDays();
   $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
-});
+  $('#stairs-main-card').toggleClass('hide')
+  $('#stairs-trending-card').toggleClass('hide')
+})
 
 $('.sleep-info-button').on('click', function() {
   $('#sleep-info-card').toggleClass('hide')
@@ -162,6 +166,7 @@ $('.sleep-calendar-button').on('click', function () {
   $('#sleep-calendar-card').toggleClass('hide');
   $('.sleep-calendar-button').parent().parent().toggleClass('hide')
 })
+
 // PARENT-NODE IF RE-FACTOR
 $('.steps-go-back-button').on('click', function(event) {
   $('#steps-main-card').removeClass('hide')
@@ -183,6 +188,38 @@ $('.sleep-go-back-button').on('click', function(event) {
   $(event.target.parentNode).addClass('hide')
 })
 
+
+//refactor
+function showInfo() {
+  if (event.target.classList.contains('steps-info-button')) {
+    flipCard(stepsMainCard, stepsInfoCard);
+  }
+  if (event.target.classList.contains('steps-friends-button')) {
+    flipCard(stepsMainCard, stepsFriendsCard);
+  }
+  if (event.target.classList.contains('steps-calendar-button')) {
+    flipCard(stepsMainCard, stepsCalendarCard);
+  }
+  if (event.target.classList.contains('stairs-calendar-button')) {
+    flipCard($('#stairs-main-card'), stairsCalendarCard);
+  }
+  if (event.target.classList.contains('sleep-info-button')) {
+    flipCard(sleepMainCard, sleepInfoCard);
+  }
+  if (event.target.classList.contains('sleep-friends-button')) {
+    flipCard(sleepMainCard, sleepFriendsCard);
+  }
+  if (event.target.classList.contains('steps-go-back-button')) {
+    flipCard(event.target.parentNode, stepsMainCard);
+  }
+  if (event.target.classList.contains('hydration-go-back-button')) {
+    flipCard(event.target.parentNode, hydrationMainCard);
+  }
+
+  if (event.target.classList.contains('sleep-go-back-button')) {
+    flipCard(event.target.parentNode, sleepMainCard);
+  }
+}
 // refactor combine with updateTrendingStepDays
 function updateTrendingStairsDays() {
   user.findTrendingStairsDays();
@@ -218,8 +255,8 @@ function displayAllInfo() {
 
   $('#header-name').prepend(`${user.getFirstName()}'S `)
 
-  $('#hydration-user-ounces-today').text(function () {
-    return hydrationData.find(hydration => {
+  $('#hydration-user-ounces-today').text(function() {
+      return hydrationData.find(hydration => {
       return hydration.userId === user.id && hydration.date === todayDate;
     }).ounces;
   })
@@ -264,15 +301,16 @@ function displayAllInfo() {
 
   $('#stairs-calendar-stairs-average-weekly').text((user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0))
 
-  $('#stairs-friend-flights-average-today').text((userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1))
+  $('#stairs-friend-flights-average-today').text ((userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1));
 
   $('#stairs-info-flights-today').text(activityData.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
-  }).flightsOfStairs)
+  }).flightsOfStairs);
 
   $('#stairs-user-stairs-today').text(activityData.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
-  }).flightsOfStairs * 12)
+  }).flightsOfStairs * 12);
+
 
   $('#stairs-calendar-flights-average-weekly').text(user.calculateAverageFlightsThisWeek(todayDate))
 
@@ -318,7 +356,6 @@ function displayAllInfo() {
     }
   });
 }
-
 
 function determineActvityType() {
   if (event.target.classList.contains('activity-tab')) {
@@ -372,7 +409,6 @@ let addCompletedActivity = (stepsWalked, activityTime, stairAmount) => {
     .catch(err => console.error(err))
 }
 
-
 function displayHydrationForm() {
   clearDisplayForm();
   $('.display-form').html(
@@ -422,7 +458,6 @@ let postHydration = (hydration) => {
     .catch(err => console.error(err))
   $('.new-activity-dropdown').toggleClass('hide')
 }
-
 
 function postNewSleep() {
   let sleepAmount = parseInt($('.sleep-amount-input').val())
