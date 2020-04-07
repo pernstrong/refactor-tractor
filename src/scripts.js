@@ -64,75 +64,13 @@ function createHydrationInfo(hyrdrationInfo) {
     hydrationData.push(newHydration)
   })
 }
-let stairsMainCard = $('#stairs-main-card');
-let sleepMainCard = $('#sleep-main-card');
-let hydrationMainCard = $('#hydration-main-card');
-let stepsMainCard = $('#steps-main-card');
-// let dailyOz = document.querySelectorAll('.daily-oz');
-// let dropdownEmail = document.querySelector('#dropdown-email');
-// let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-// let dropdownGoal = document.querySelector('#dropdown-goal');
-// let dropdownName = document.querySelector('#dropdown-name');
-// let headerName = document.querySelector('#header-name');
-// let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-// let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
-// let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
-// let hydrationInfoCard = document.querySelector('#hydration-info-card');
-// let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
-// let hydrationMainCard = document.querySelector('#hydration-main-card');
-// let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
-let mainPage = document.querySelector('main');
+
 let profileButton = document.querySelector('#profile-button');
-// let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-// let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-// let sleepFriendsCard = document.querySelector('#sleep-friends-card');
-// let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
-// let sleepInfoCard = document.querySelector('#sleep-info-card');
-// let sleepInfoHoursAverageAlltime = document.querySelector('#sleep-info-hours-average-alltime');
-// let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality-average-alltime');
-// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-
-//???????????????????
-// let sleepMainCard = document.querySelector('#sleep-main-card');
-
-// let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-// let stairsCalendarCard = document.querySelector('#stairs-calendar-card');
-// let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
-// let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
-
-// let stepsInfoCard = document.querySelector('#steps-info-card');
-// let stepsFriendsCard = document.querySelector('#steps-friends-card');
-// let stepsTrendingCard = document.querySelector('#steps-trending-card');
-// let stepsCalendarCard = document.querySelector('#steps-calendar-card');
-//Gave to Joe
-// let stairsFriendFlightsAverageToday = document.querySelector('#stairs-friend-flights-average-today');
-// let stairsFriendsCard = document.querySelector('#stairs-friends-card');
-// let stairsInfoCard = document.querySelector('#stairs-info-card');
-// let stairsInfoFlightsToday = document.querySelector('#stairs-info-flights-today');
-// let stairsMainCard = document.querySelector('#stairs-main-card');
-// let stairsTrendingButton = document.querySelector('.stairs-trending-button');
-// let stairsTrendingCard = document.querySelector('#stairs-trending-card');
-// let stairsUserStairsToday = document.querySelector('#stairs-user-stairs-today');
-// let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
-// let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
-// let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
-// let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
-// let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-// let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
-// let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
-// let stepsTrendingButton = document.querySelector('.steps-trending-button');
-// let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
-// let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
-// let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-// let userInfoDropdown = document.querySelector('#user-info-dropdown');
-
 
 $('.new-info-container').on('click', function () {
   determineActvityType()
 });
-mainPage.addEventListener('click', showInfo);
+
 profileButton.addEventListener('click', showDropdown);
 $('#activity-button').on('click', function () {
   displayDropDown()
@@ -161,9 +99,31 @@ function displayDropDown() {
   $('.new-activity-dropdown').toggle('hide')
 }
 
-$('.hydration-calendar-button').on('click', function () {
-  $('#hydration-calendar-card').toggleClass('hide')
-  $('.hydration-calendar-button').parent().parent().toggleClass('hide')
+$('.steps-info-button').on('click', function() {
+  $('#steps-info-card').toggleClass('hide')
+  $('#steps-main-card').toggleClass('hide')
+})
+
+$('.steps-friends-button').on('click', function() {
+  $('#steps-friends-card').toggleClass('hide')
+  $('#steps-main-card').toggleClass('hide')
+})
+
+$('.steps-calendar-button').on('click', function() {
+  $('#steps-calendar-card').toggleClass('hide')
+  $('#steps-main-card').toggleClass('hide')
+})
+
+$('.steps-trending-button').on('click', function () {
+  user.findTrendingStepDays();
+  $('#steps-trending-card').toggleClass('hide')
+  $('#steps-main-card').toggleClass('hide')
+  $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
+});
+
+$('.hydration-info-button').on('click', function () {
+  $('#hydration-info-card').toggleClass('hide')
+  $('.hydration-info-button').parent().parent().toggleClass('hide')
 })
 
 $('.hydration-friends-button').on('click', function () {
@@ -171,30 +131,9 @@ $('.hydration-friends-button').on('click', function () {
   $('.hydration-friends-button').parent().parent().toggleClass('hide')
 })
 
-$('.hydration-info-button').on('click', function () {
-  $('#hydration-info-card').toggleClass('hide')
-  $('.hydration-info-button').parent().parent().toggleClass('hide')
-})
-
-$('.sleep-calendar-button').on('click', function () {
-  $('#sleep-calendar-card').toggleClass('hide');
-  $('.sleep-calendar-button').parent().parent().toggleClass('hide')
-})
-
-$('.sleep-friends-button').on('click', function () {
-  $('#sleep-friends-card').toggleClass('hide');
-  $('#sleep-main-card').toggleClass('hide')
-})
-
-$('.stairs-trending-button').on('click', function () {
-  user.findTrendingStairsDays();
-  $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
-});
-
-//????????????????????????????????????????????
-$('.sleep-info-button').on('click', function() {
-  $('#sleep-info-card').toggleClass('hide')
-  $('#sleep-main-card').toggleClass('hide')
+$('.hydration-calendar-button').on('click', function () {
+  $('#hydration-calendar-card').toggleClass('hide')
+  $('.hydration-calendar-button').parent().parent().toggleClass('hide')
 })
 
 $('.stairs-calendar-button').on('click', function() {
@@ -202,76 +141,45 @@ $('.stairs-calendar-button').on('click', function() {
   $('#stairs-main-card').toggleClass('hide')
 })
 
-$('.steps-info-button').on('click', function() {
-  $('#steps-info-card').toggleClass('hide')
-  $('#steps-main-card').toggleClass('hide')
+$('.stairs-trending-button').on('click', function () {
+  user.findTrendingStairsDays();
+  $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
+});
+
+$('.sleep-info-button').on('click', function() {
+  $('#sleep-info-card').toggleClass('hide')
+  $('#sleep-main-card').toggleClass('hide')
 })
 
-
-$('.steps-friends-button').on('click', function() {
-  $('#steps-friends-card').toggleClass('hide')
-  $('#steps-main-card').toggleClass('hide')
+$('.sleep-friends-button').on('click', function () {
+  $('#sleep-friends-card').toggleClass('hide');
+  $('#sleep-main-card').toggleClass('hide')
 })
 
-$('.steps-trending-button').on('click', function() {
-  $('#steps-trending-card').toggleClass('hide')
-  $('#steps-main-card').toggleClass('hide')
+$('.sleep-calendar-button').on('click', function () {
+  $('#sleep-calendar-card').toggleClass('hide');
+  $('.sleep-calendar-button').parent().parent().toggleClass('hide')
+})
+// PARENT-NODE IF RE-FACTOR
+$('.steps-go-back-button').on('click', function(event) {
+  $('#steps-main-card').removeClass('hide')
+  $(event.target.parentNode).addClass('hide')
 })
 
-
-$('.steps-calendar-button').on('click', function() {
-  $('#steps-calendar-card').toggleClass('hide')
-  $('#steps-main-card').toggleClass('hide')
+$('.hydration-go-back-button').on('click', function(event) {
+  $('#hydration-main-card').removeClass('hide')
+  $(event.target.parentNode).addClass('hide')
+})
+  
+$('.stairs-go-back-button').on('click', function(event) {
+  $('#stairs-main-card').removeClass('hide')
+  $(event.target.parentNode).addClass('hide')
 })
 
-
- 
-//refactor
-// if (event.target.classList.contains('steps-info-button')) {
-//   flipCard(stepsMainCard, stepsInfoCard);
-// }
-// if (event.target.classList.contains('steps-friends-button')) {
-//   flipCard(stepsMainCard, stepsFriendsCard);
-// }
-// if (event.target.classList.contains('steps-trending-button')) {
-//   flipCard(stepsMainCard, stepsTrendingCard);
-// }
-// if (event.target.classList.contains('steps-calendar-button')) {
-//   flipCard(stepsMainCard, stepsCalendarCard);
-// }
-// if (event.target.classList.contains('stairs-info-button')) {
-//   flipCard(stairsMainCard, stairsInfoCard);
-// }
-// if (event.target.classList.contains('stairs-friends-button')) {
-//   flipCard(stairsMainCard, stairsFriendsCard);
-// }
-// if (event.target.classList.contains('stairs-trending-button')) {
-//   flipCard(stairsMainCard, stairsTrendingCard);
-// }
-// if (event.target.classList.contains('stairs-calendar-button')) {
-//   flipCard(stairsMainCard, stairsCalendarCard);
-// }
-// if (event.target.classList.contains('sleep-info-button')) {
-//   flipCard(sleepMainCard, sleepInfoCard);
-// }
-// if (event.target.classList.contains('sleep-friends-button')) {
-//   flipCard(sleepMainCard, sleepFriendsCard);
-// }
-
-function showInfo() {
-  if (event.target.classList.contains('steps-go-back-button')) {
-    flipCard(event.target.parentNode, stepsMainCard);
-  }
-  if (event.target.classList.contains('hydration-go-back-button')) {
-    flipCard(event.target.parentNode, hydrationMainCard);
-  }
-  if (event.target.classList.contains('stairs-go-back-button')) {
-    flipCard(event.target.parentNode, stairsMainCard);
-  }
-  if (event.target.classList.contains('sleep-go-back-button')) {
-    flipCard(event.target.parentNode, sleepMainCard);
-  }
-}
+$('.sleep-go-back-button').on('click', function(event) {
+  $('#sleep-main-card').removeClass('hide')
+  $(event.target.parentNode).addClass('hide')
+})
 
 // refactor combine with updateTrendingStepDays
 function updateTrendingStairsDays() {
@@ -376,11 +284,6 @@ function displayAllInfo() {
 
   $('#steps-calendar-total-steps-weekly').text(user.calculateAverageStepsThisWeek(todayDate));
 
-  $('.steps-trending-button').on('click', function () {
-    user.findTrendingStepDays();
-    $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
-  });
-
   $('#steps-friend-active-minutes-average-today').text(userRepository.calculateAverageMinutesActive(todayDate));
 
   $('#steps-friend-average-step-goal').text(`${userRepository.calculateAverageStepGoal()}`);
@@ -390,6 +293,7 @@ function displayAllInfo() {
   $('#steps-info-active-minutes-today').text(activityData.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
   }).minutesActive);
+  
   $('#steps-user-steps-today').text(activityData.find(activity => {
     return activity.userId === user.id && activity.date === todayDate;
   }).steps);
