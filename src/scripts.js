@@ -65,20 +65,22 @@ function createHydrationInfo(hyrdrationInfo) {
   })
 }
 
-let profileButton = document.querySelector('#profile-button');
-
 $('.new-info-container').on('click', function () {
   determineActvityType()
 });
 
-profileButton.addEventListener('click', showDropdown);
+$('#profile-button').on('click', showDropdown);
+
 $('#activity-button').on('click', function () {
   displayDropDown()
 })
+
+// ????????????????????????????????????
 $('.stairs-trending-button').on('click', updateTrendingStairsDays);
 // stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 // sleepSubmit.on('click', postNewSleep)
 // displayForm.addEventListener('click', routeDisplayForm)
+// ?????????????????????????????????????
 
 function routeDisplayForm() {
   if (event.target.classList.contains('submit-sleep')) {
@@ -215,10 +217,6 @@ function displayAllInfo() {
   $('#dropdown-name').text(user.name.toUpperCase());
 
   $('#header-name').prepend(`${user.getFirstName()}'S `)
-
-  // hydrationUserOuncesToday.innerText = hydrationData.find(hydration => {
-  //   return hydration.userId === user.id && hydration.date === todayDate;
-  // }).ounces;
 
   $('#hydration-user-ounces-today').text(function () {
     return hydrationData.find(hydration => {
@@ -392,8 +390,6 @@ function displayHydrationForm() {
 
 function displaySleepForm() {
   clearDisplayForm();
-  // $('.sleep-amount-input').html()
-  // $('.sleep-quality-input').html()
   $('.display-form').html(
     `<section class='drop-down-form'>
         <legend for="number-of-onces">SLEEP!</legend>
