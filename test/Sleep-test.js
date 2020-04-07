@@ -5,7 +5,9 @@ import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
 describe('Sleep', function() {
-  let sleep;
+  let sleep1;
+  let sleep2;
+  let sleep3;
   let user1;
   let user2;
   let userRepository;
@@ -58,36 +60,44 @@ describe('Sleep', function() {
       "sleepQuality": 1.4
     }, userRepository);
   });
+
   it('should be a function', function() {
     expect(Sleep).to.be.a('function');
   });
+
   it('should be an instance of activity', function() {
     expect(sleep1).to.be.an.instanceof(Sleep);
   });
+
   it('should hold a userId', function() {
     expect(sleep2.userId).to.equal(2);
   });
+
   it('should hold a date', function() {
     expect(sleep3.date).to.equal("2019/07/17");
   });
+
   it('should hold hours slept', function() {
     expect(sleep1.hoursSlept).to.equal(6.1);
   });
+
   it('should hold sleep quality', function() {
     expect(sleep3.sleepQuality).to.equal(1.4);
   });
-  describe('sleep', function() {
-    it('should update user\'s slept hours record', function() {
-      expect(user1.sleepHoursRecord.length).to.equal(2);
-    });
-    it('should update user\'s slept hours record', function() {
-      expect(user2.sleepQualityRecord.length).to.equal(1);
-    });
-    it('should update user\'s slept hours average', function() {
-      expect(user1.hoursSleptAverage).to.equal('7.7');
-    });
-    it('should update user\'s sleep quality average', function() {
-      expect(user1.sleepQualityAverage).to.equal('1.8');
-    });
-  })
+
+  it('should update user\'s slept hours record', function() {
+    expect(user1.sleepHoursRecord.length).to.equal(2);
+  });
+
+  it('should update user\'s slept hours record', function() {
+    expect(user2.sleepQualityRecord.length).to.equal(1);
+  });
+
+  it('should update user\'s slept hours average', function() {
+    expect(user1.hoursSleptAverage).to.equal('7.7');
+  });
+
+  it('should update user\'s sleep quality average', function() {
+    expect(user1.sleepQualityAverage).to.equal('1.8');
+  });
 });
