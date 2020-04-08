@@ -49,8 +49,8 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
-  console.log('sleep', sleepData.length)
-  console.log('sleep', sleepData[sleepData.length - 1])
+  // console.log('sleep', sleepData.length)
+  // console.log('sleep', sleepData[sleepData.length - 1])
 }
 
 function createActivityInfo(activityInfo) {
@@ -58,8 +58,8 @@ function createActivityInfo(activityInfo) {
     const newActivity = new Activity(curActivity, userRepository)
     activityData.push(newActivity)
   })
-  console.log('activity', activityData.length)
-  console.log('activity', activityData[activityData.length - 1])
+  // console.log('activity', activityData.length)
+  // console.log('activity', activityData[activityData.length - 1])
 }
 
 function createHydrationInfo(hyrdrationInfo) {
@@ -67,8 +67,8 @@ function createHydrationInfo(hyrdrationInfo) {
     const newHydration = new Hydration(curHydration, userRepository)
     hydrationData.push(newHydration)
   })
-  console.log('hydration', hydrationData.length)
-  console.log('hydration', hydrationData[hydrationData.length - 1])
+  // console.log('hydration', hydrationData.length)
+  // console.log('hydration', hydrationData[hydrationData.length - 1])
 }
 
 
@@ -83,12 +83,6 @@ $('#activity-button').on('click', function() {
 })
 
 $('.stairs-trending-button').on('click', updateTrendingStairsDays);
-
-function routeDisplayForm() {
-  if (event.target.classList.contains('submit-sleep')) {
-    postNewSleep()
-  }
-}
 
 function showDropdown() {
   $('#user-info-dropdown').toggle('hide');
@@ -130,7 +124,6 @@ $('.hydration-friends-button').on('click', function() {
   $('.hydration-friends-button').parent().parent().toggleClass('hide')
 })
 
-// duplicate????
 $('.hydration-calendar-button').on('click', function() {
   $('#hydration-calendar-card').toggleClass('hide')
   $('.hydration-calendar-button').parent().parent().toggleClass('hide')
@@ -426,9 +419,9 @@ const postHydration = (hydration) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        userId: user.id,
+        userID: user.id,
         date: todayDate,
-        ounces: hydration
+        numOunces: hydration
       })
     })
     .then(resolved => resolved.json())
