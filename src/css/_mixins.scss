@@ -1,0 +1,57 @@
+// tabs
+@mixin tabs($imageUrl, $backgroundSize) {
+  border: 3px solid grey;
+  background-image: $imageUrl;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: $backgroundSize;
+  width: 6vw;
+  height: 6vw;
+}
+
+// card containers
+@mixin cardContainers($backgroundColor, $gridArea) {
+  background-color: $backgroundColor;
+  grid-area: $gridArea;
+  margin: .5vw;
+}
+
+// card buttons
+@mixin buttons($margin) {
+  background-position: center;
+  background-size: 3.4vw;
+  border: none;
+  height: 3.4vw;
+  width: 3.4vw;
+  margin: $margin;
+  cursor: pointer;
+}
+
+// drop down for user and add buttons
+@mixin dropDown() {
+  background-color: $dark-gray-background;
+  color: white;
+  margin: -1.2% 0% 0% 60%;
+  position: relative;
+  text-align: center;
+  z-index: 100;
+}
+
+// header buttons
+@mixin headerButton($imageUrl, $height, $margin, $width) {
+  background-image: $imageUrl;
+  background-position: center;
+  background-size: 5.6vw;
+  border: none;
+  display: inline;
+  float: right;
+  height: $height;
+  margin: $margin;
+  width: $width;
+}
+
+// display flex and justify content center
+@mixin flexCenter() {
+  display: flex;
+  justify-content: center;
+}
