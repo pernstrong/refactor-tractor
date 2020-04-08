@@ -11,14 +11,14 @@
 <body>
   <header>
     <h1><span id='header-name'></span>FITLIT</h1>
-    <button type='button' name='activity-button' id='activity-button' value='activity button'></button>
-    <button type='button' name='button' id='profile-button' value='profile button'></button>
+    <button type='button' name='activity-button' id='activity-button' aria-label='new activity button'></button>
+    <button type='button' name='button' id='profile-button' aria-label='view profile button'></button>
     <section class='new-activity-dropdown hide'>
       <h4 class='dropdown-header'>Todays Growth!</h2>
         <section class='new-info-container'>
-      <button class="activity-tab" value='activity tab'></button>
-      <button class="sleep-tab" value='sleep tab'></button>
-      <button class="hydration-tab" value='hydration tab'></button>
+      <button class="activity-tab" aria-label='add new activity tab'></button>
+      <button class="sleep-tab" aria-lable='add sleep activity tab'></button>
+      <button class="hydration-tab" aria-label='add new hydration tab'></button>
     </section>
     <section class='display-form'>
     </section>
@@ -36,19 +36,19 @@
     <section class='card-container' id='steps-card-container'>
       <section class='main-card' id='steps-main-card'>
         <section class='main-card-top-row'>
-          <button type='button' name='button' class='info-button steps-info-button' value='steps info button'></button>
+          <button type='button' name='button' class='info-button steps-info-button' aria-label='steps info button'></button>
           <h3>YOU HAVE WALKED</h3>
-          <button type='button' name='button' class='friends-button steps-friends-button' value='friends steps button'></button>
+          <button type='button' name='button' class='friends-button steps-friends-button' aria-label='your friends steps button'></button>
         </section>
         <h2 id='steps-user-steps-today'>X</h2>
         <section class='main-card-top-row'>
-          <button type='button' name='button' class='trending-button steps-trending-button' value='steps trending button'></button>
+          <button type='button' name='button' class='trending-button steps-trending-button' aria-label='trending steps button'></button>
           <h3>STEPS TODAY</h3>
-          <button type='button' name='button' class='calendar-button steps-calendar-button' value='steps previous days'></button>
+          <button type='button' name='button' class='calendar-button steps-calendar-button' aria-label='previous steps'></button>
         </section>
       </section>
       <section class='info-card hide' id='steps-info-card'>
-        <button type='button' name='button' class='go-back-button steps-go-back-button' value='back to main steps'></button>
+        <button type='button' name='button' class='go-back-button steps-go-back-button' aria-label='back to main steps button'></button>
         <span class='card-data-line'>
           <p>TOTAL ACTIVE MINUTES TODAY:</p>
           <h4 id='steps-info-active-minutes-today'></h4>
@@ -59,7 +59,7 @@
         </span>
       </section>
       <section class='friends-card hide' id='steps-friends-card'>
-        <button type='button' name='button' class='go-back-button steps-go-back-button' value='back to friends steps'></button>
+        <button type='button' name='button' class='go-back-button steps-go-back-button' aria-label='back to friends steps button'></button>
         <span class='card-data-line'>
           <p>ALL USERS' AVERAGE ACTIVE MINUTES TODAY:</p>
           <h4 id='steps-friend-active-minutes-average-today'></h4>
@@ -73,7 +73,6 @@
           <h4 id='steps-friend-average-step-goal'></h4>
         </span>
       </section>
-      <!-- stop -->
       <section class='trending-card hide' id='steps-trending-card'>
         <button type='button' name='button' class='go-back-button steps-go-back-button' aria-label="steps trending back button"></button>
         <div class='card-data-line trending-steps-phrase-container'>
