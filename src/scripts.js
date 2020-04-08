@@ -49,6 +49,11 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
+<<<<<<< HEAD
+=======
+  // console.log('sleep', sleepData.length)
+  // console.log('sleep', sleepData[sleepData.length - 1])
+>>>>>>> master
 }
 
 function createActivityInfo(activityInfo) {
@@ -56,6 +61,11 @@ function createActivityInfo(activityInfo) {
     const newActivity = new Activity(curActivity, userRepository)
     activityData.push(newActivity)
   })
+<<<<<<< HEAD
+=======
+  // console.log('activity', activityData.length)
+  // console.log('activity', activityData[activityData.length - 1])
+>>>>>>> master
 }
 
 function createHydrationInfo(hyrdrationInfo) {
@@ -63,6 +73,11 @@ function createHydrationInfo(hyrdrationInfo) {
     const newHydration = new Hydration(curHydration, userRepository)
     hydrationData.push(newHydration)
   })
+<<<<<<< HEAD
+=======
+  // console.log('hydration', hydrationData.length)
+  // console.log('hydration', hydrationData[hydrationData.length - 1])
+>>>>>>> master
 }
 
 
@@ -77,12 +92,6 @@ $('#activity-button').on('click', function() {
 })
 
 $('.stairs-trending-button').on('click', updateTrendingStairsDays);
-
-function routeDisplayForm() {
-  if (event.target.classList.contains('submit-sleep')) {
-    postNewSleep()
-  }
-}
 
 function showDropdown() {
   $('#user-info-dropdown').toggle('hide');
@@ -124,7 +133,6 @@ $('.hydration-friends-button').on('click', function() {
   $('.hydration-friends-button').parent().parent().toggleClass('hide')
 })
 
-// duplicate????
 $('.hydration-calendar-button').on('click', function() {
   $('#hydration-calendar-card').toggleClass('hide')
   $('.hydration-calendar-button').parent().parent().toggleClass('hide')
