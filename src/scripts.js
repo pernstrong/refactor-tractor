@@ -49,8 +49,11 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
+<<<<<<< HEAD
+=======
   // console.log('sleep', sleepData.length)
   // console.log('sleep', sleepData[sleepData.length - 1])
+>>>>>>> master
 }
 
 function createActivityInfo(activityInfo) {
@@ -58,8 +61,11 @@ function createActivityInfo(activityInfo) {
     const newActivity = new Activity(curActivity, userRepository)
     activityData.push(newActivity)
   })
+<<<<<<< HEAD
+=======
   // console.log('activity', activityData.length)
   // console.log('activity', activityData[activityData.length - 1])
+>>>>>>> master
 }
 
 function createHydrationInfo(hyrdrationInfo) {
@@ -67,8 +73,11 @@ function createHydrationInfo(hyrdrationInfo) {
     const newHydration = new Hydration(curHydration, userRepository)
     hydrationData.push(newHydration)
   })
+<<<<<<< HEAD
+=======
   // console.log('hydration', hydrationData.length)
   // console.log('hydration', hydrationData[hydrationData.length - 1])
+>>>>>>> master
 }
 
 
@@ -412,7 +421,6 @@ function clearDisplayForm() {
 }
 
 const postHydration = (hydration) => {
-
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
       method: 'POST',
       headers: {
@@ -424,7 +432,7 @@ const postHydration = (hydration) => {
         numOunces: hydration
       })
     })
-    .then(resolved => resolved.json())
+    .then(response => response.json())
     .catch(err => console.error(err))
   clearDisplayActivityForm()
   clearHydrationInputs()
@@ -434,7 +442,7 @@ function postNewSleep() {
   let sleepAmount = parseInt($('.sleep-amount-input').val())
   let sleepQuality = parseInt($('.sleep-quality-input').val())
   if (sleepAmount > 0 && sleepQuality > 0 && sleepQuality >= 1.0 && sleepQuality < 5.001) {
-    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/  sleepData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
