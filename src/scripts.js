@@ -84,12 +84,6 @@ $('#activity-button').on('click', function() {
 
 $('.stairs-trending-button').on('click', updateTrendingStairsDays);
 
-function routeDisplayForm() {
-  if (event.target.classList.contains('submit-sleep')) {
-    postNewSleep()
-  }
-}
-
 function showDropdown() {
   $('#user-info-dropdown').toggle('hide');
 }
