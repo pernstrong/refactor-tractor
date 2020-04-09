@@ -6,8 +6,9 @@
     this.email = userData.email;
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
-    this.totalStepsThisWeek = 0;
     this.friends = userData.friends;
+    // only above in user...the rest spread out?
+    this.totalStepsThisWeek = 0;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
     this.hoursSleptAverage = 0;
@@ -148,6 +149,7 @@
       }
     }
   }
+  // stays here!
   findFriendsNames(users) {
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());

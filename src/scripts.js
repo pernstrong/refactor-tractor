@@ -49,11 +49,6 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
-<<<<<<< HEAD
-=======
-  // console.log('sleep', sleepData.length)
-  // console.log('sleep', sleepData[sleepData.length - 1])
->>>>>>> master
 }
 
 function createActivityInfo(activityInfo) {
@@ -61,11 +56,6 @@ function createActivityInfo(activityInfo) {
     const newActivity = new Activity(curActivity, userRepository)
     activityData.push(newActivity)
   })
-<<<<<<< HEAD
-=======
-  // console.log('activity', activityData.length)
-  // console.log('activity', activityData[activityData.length - 1])
->>>>>>> master
 }
 
 function createHydrationInfo(hyrdrationInfo) {
@@ -73,14 +63,9 @@ function createHydrationInfo(hyrdrationInfo) {
     const newHydration = new Hydration(curHydration, userRepository)
     hydrationData.push(newHydration)
   })
-<<<<<<< HEAD
-=======
-  // console.log('hydration', hydrationData.length)
-  // console.log('hydration', hydrationData[hydrationData.length - 1])
->>>>>>> master
 }
 
-
+//
 $('.new-info-container').on('click', function() {
   determineActvityType()
 });
@@ -197,15 +182,15 @@ $('.sleep-go-back-button').on('click', function(event) {
 })
 
 // refactor combine with updateTrendingStepDays
-function updateTrendingStairsDays() {
-  user.findTrendingStairsDays();
-  $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
-}
-
-function updateTrendingStepDays() {
-  user.findTrendingStepDays();
-  $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
-}
+// function updateTrendingStairsDays() {
+//   user.findTrendingStairsDays();
+//   $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
+// }
+//
+// function updateTrendingStepDays() {
+//   user.findTrendingStepDays();
+//   $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
+// }
 
 function displayAllInfo() {
 
@@ -333,6 +318,8 @@ function displayAllInfo() {
   });
 }
 
+
+//
 // CHANGE TO JQUERY
 function determineActvityType() {
   if (event.target.classList.contains('activity-tab')) {
