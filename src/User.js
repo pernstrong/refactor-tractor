@@ -1,5 +1,5 @@
  class User {
-  constructor(userData, calculator) {
+  constructor(userData) {
     this.id = userData.id;
     this.name = userData.name;
     this.address = userData.address;
@@ -7,7 +7,6 @@
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
     this.friends = userData.friends;
-    this.calculator = calculator
     // only above in user...the rest spread out?
     this.totalStepsThisWeek = 0;
     this.ouncesAverage = 0;
@@ -38,25 +37,27 @@
     })
   }
 
-  findFriendsTotalStepsForWeek(users, date) {
-    this.friends.map(friend => {
-      let matchedFriend = users.find(user => user.id === friend);
-      matchedFriend.calculateTotalStepsThisWeek(date);
-      this.friendsActivityRecords.push(
-        {
-          'id': matchedFriend.id,
-          'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
-          'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-        })
-    })
-    this.calculateTotalStepsThisWeek(date);
-    this.friendsActivityRecords.push({
-      'id': this.id,
-      'firstName': 'YOU',
-      'totalWeeklySteps': this.totalStepsThisWeek
-    });
-    this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
-  }
+  // findFriendsTotalStepsForWeek(users, date) {
+  //   this.friends.map(friend => {
+  //     let matchedFriend = users.find(user => user.id === friend);
+  //     console.log('matcehd', matchedFriend);
+  //     matchedFriend.calculateTotalStepsThisWeek(date);
+  //     this.friendsActivityRecords.push(
+  //       {
+  //         'id': matchedFriend.id,
+  //         'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
+  //         'totalWeeklySteps': matchedFriend.totalStepsThisWeek
+  //       })
+  //       console.log('friend', this.friendsActivityRecords[0]);
+    // })
+  //   this.calculateTotalStepsThisWeek(date);
+  //   this.friendsActivityRecords.push({
+  //     'id': this.id,
+  //     'firstName': 'YOU',
+  //     'totalWeeklySteps': this.totalStepsThisWeek
+  //   });
+  //   this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
+  // }
 
 
   // goes
@@ -201,15 +202,15 @@
 // }
 
 
-  calculateTotalStepsThisWeek(todayDate) {
-    this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0));
-  }
+  // calculateTotalStepsThisWeek(todayDate) {
+  //   this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
+  //     let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
+  //     if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
+  //       sum += activity.steps;
+  //     }
+  //     return sum;
+  //   }, 0));
+  // }
 
 
 }

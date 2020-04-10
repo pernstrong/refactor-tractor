@@ -84,7 +84,8 @@ const domUpdates = {
     $('.stair-amount-input').val('')
   },
 
-  displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate) {
+  displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate, calculator) {
+    console.log(calculator);
     let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
       if (Object.keys(a)[0] > Object.keys(b)[0]) {
         return -1;
@@ -186,8 +187,7 @@ const domUpdates = {
       return activity.userId === user.id && activity.date === todayDate;
     }).steps);
 
-    user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-
+    calculator.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
     user.friendsActivityRecords.forEach(friend => {
       $('#dropdown-friends-steps-container').append(`
     <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
