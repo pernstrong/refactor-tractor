@@ -6,6 +6,7 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import Calculator from './Calculator'
 import domUpdates from './domUpdates';
 let userRepository = new UserRepository();
 let sleepData = []
@@ -27,6 +28,7 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createSleepInfo(sleepInfo)
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
+  createCalculator()
   domUpdates.displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate)
 }
 
@@ -39,8 +41,9 @@ function createUserRepo(userInfo) {
 }
 
 function assignUser() {
-  let randomNum = Math.floor((Math.random() * 49));
-  user = userRepository.users[randomNum]
+  // let randomNum = Math.floor((Math.random() * 49));
+  // user = userRepository.users[randomNum]
+  user = userRepository.users[12]
 }
 
 function createSleepInfo(sleepInfo) {
@@ -50,7 +53,6 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
-  console.log(sleepData.length);
 }
 
 function createActivityInfo(activityInfo) {
@@ -58,7 +60,6 @@ function createActivityInfo(activityInfo) {
     const newActivity = new Activity(curActivity, userRepository)
     activityData.push(newActivity)
   })
-  console.log(activityData.length);
 }
 
 function createHydrationInfo(hyrdrationInfo) {
@@ -66,10 +67,13 @@ function createHydrationInfo(hyrdrationInfo) {
     const newHydration = new Hydration(curHydration, userRepository)
     hydrationData.push(newHydration)
   })
-  console.log(hydrationData.length);
-
 }
 
+function createCalculator() {
+  const calculator = new Calculator(user, sleepData, activityData, hydrationData);
+}
+
+//
 $('.new-info-container').on('click', function() {
   determineActvityType()
 });
@@ -162,6 +166,8 @@ $('.sleep-go-back-button').on('click', function(event) {
 
 //not done
 
+
+//
 // CHANGE TO JQUERY
 function determineActvityType() {
   if (event.target.classList.contains('activity-tab')) {
