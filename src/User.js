@@ -1,5 +1,5 @@
  class User {
-  constructor(userData) {
+  constructor(userData, calculator) {
     this.id = userData.id;
     this.name = userData.name;
     this.address = userData.address;
@@ -7,6 +7,7 @@
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
     this.friends = userData.friends;
+    this.calculator = calculator
     // only above in user...the rest spread out?
     this.totalStepsThisWeek = 0;
     this.ouncesAverage = 0;
@@ -15,6 +16,7 @@
     this.sleepQualityAverage = 0;
     this.sleepHoursRecord = [];
     this.sleepQualityRecord = [];
+
     this.activityRecord = [];
     this.accomplishedDays = [];
     this.trendingStepDays = [];
@@ -22,10 +24,42 @@
     this.friendsNames = [];
     this.friendsActivityRecords = []
   }
+
+  // stays
   getFirstName() {
     var names = this.name.split(' ');
     return names[0].toUpperCase();
   }
+
+  // stays here!
+  findFriendsNames(users) {
+    this.friends.forEach(friend => {
+      this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
+    })
+  }
+
+  findFriendsTotalStepsForWeek(users, date) {
+    this.friends.map(friend => {
+      let matchedFriend = users.find(user => user.id === friend);
+      matchedFriend.calculateTotalStepsThisWeek(date);
+      this.friendsActivityRecords.push(
+        {
+          'id': matchedFriend.id,
+          'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
+          'totalWeeklySteps': matchedFriend.totalStepsThisWeek
+        })
+    })
+    this.calculateTotalStepsThisWeek(date);
+    this.friendsActivityRecords.push({
+      'id': this.id,
+      'firstName': 'YOU',
+      'totalWeeklySteps': this.totalStepsThisWeek
+    });
+    this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
+  }
+
+
+  // goes
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
     if (this.ouncesRecord.length) {
@@ -34,6 +68,7 @@
       this.ouncesAverage = amount;
     }
   }
+
   addDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
@@ -43,6 +78,8 @@
       return sum
     }, 0)
   }
+
+
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
       'date': date,
@@ -81,12 +118,16 @@
       return sum;
     }, 0) / 7).toFixed(1);
   }
+
+
   updateActivities(activity) {
     this.activityRecord.unshift(activity);
     if (activity.numSteps >= this.dailyStepGoal) {
       this.accomplishedDays.unshift(activity.date);
     }
   }
+
+
   findClimbingRecord() {
     return this.activityRecord.sort((a, b) => {
       return b.flightsOfStairs - a.flightsOfStairs;
@@ -127,6 +168,8 @@
       return sum;
     }, 0) / 7).toFixed(1);
   }
+
+
   findTrendingStepDays() {
     let positiveDays = [];
     for (var i = 0; i < this.activityRecord.length; i++) {
@@ -149,12 +192,15 @@
       }
     }
   }
-  // stays here!
-  findFriendsNames(users) {
-    this.friends.forEach(friend => {
-      this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
-    })
-  }
+
+// findTrendingDays(activity) {
+//   let positiveDays = [];
+//   this.activityRecord((activity, i) => {
+//     if (this.activity)
+//   }
+// }
+
+
   calculateTotalStepsThisWeek(todayDate) {
     this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
       let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
@@ -164,25 +210,8 @@
       return sum;
     }, 0));
   }
-  findFriendsTotalStepsForWeek(users, date) {
-    this.friends.map(friend => {
-      let matchedFriend = users.find(user => user.id === friend);
-      matchedFriend.calculateTotalStepsThisWeek(date);
-      this.friendsActivityRecords.push(
-        {
-          'id': matchedFriend.id,
-          'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
-          'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-        })
-    })
-    this.calculateTotalStepsThisWeek(date);
-    this.friendsActivityRecords.push({
-      'id': this.id,
-      'firstName': 'YOU',
-      'totalWeeklySteps': this.totalStepsThisWeek
-    });
-    this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
-  }
+
+
 }
 
 export default User;

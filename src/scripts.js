@@ -6,6 +6,7 @@ import User from './User';
 import Activity from './Activity';
 import Hydration from './Hydration';
 import Sleep from './Sleep';
+import Calculator from './Calculator'
 import domUpdates from './domUpdates';
 let userRepository = new UserRepository();
 let sleepData = []
@@ -27,6 +28,7 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createSleepInfo(sleepInfo)
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
+  createCalculator()
   domUpdates.displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate)
 }
 
@@ -39,8 +41,9 @@ function createUserRepo(userInfo) {
 }
 
 function assignUser() {
-  let randomNum = Math.floor((Math.random() * 49));
-  user = userRepository.users[randomNum]
+  // let randomNum = Math.floor((Math.random() * 49));
+  // user = userRepository.users[randomNum]
+  user = userRepository.users[12]
 }
 
 function createSleepInfo(sleepInfo) {
@@ -64,6 +67,10 @@ function createHydrationInfo(hyrdrationInfo) {
     const newHydration = new Hydration(curHydration, userRepository)
     hydrationData.push(newHydration)
   })
+}
+
+function createCalculator() {
+  const calculator = new Calculator(user, sleepData, activityData, hydrationData);
 }
 
 //
