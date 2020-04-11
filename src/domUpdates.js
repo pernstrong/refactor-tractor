@@ -1,7 +1,7 @@
 import $ from 'jQuery'
 
 const domUpdates = {
-   displayActivityForm() {
+  displayActivityForm() {
     this.clearDisplayForm();
     $('.display-form').html(
       `<section class='drop-down-form hide'>
@@ -16,7 +16,7 @@ const domUpdates = {
     </section>`)
   },
 
-   displayHydrationForm() {
+  displayHydrationForm() {
     this.clearDisplayForm();
     $('.display-form').html(
       `<section class='drop-down-form'>
@@ -27,7 +27,7 @@ const domUpdates = {
      </section>`)
   },
 
-   displaySleepForm() {
+  displaySleepForm() {
     this.clearDisplayForm();
     $('.display-form').html(
       `<section class='drop-down-form'>
@@ -41,15 +41,15 @@ const domUpdates = {
     )
   },
 
-   clearDisplayForm() {
+  clearDisplayForm() {
     $('.display-form').innerHTML = '';
   },
 
-   showDropdown() {
+  showDropdown() {
     $('#user-info-dropdown').toggle('hide');
   },
 
-   showActivityDropDown() {
+  showActivityDropDown() {
     $('.new-activity-dropdown').toggleClass('hide')
   },
 
@@ -58,10 +58,10 @@ const domUpdates = {
     $(hideCard).toggleClass('hide')
   },
 
-  updateStepsTrending(user){
+  updateStepsTrending(user) {
     $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
   },
-  updateStairsTrending(user){
+  updateStairsTrending(user) {
     $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
   },
 
@@ -85,70 +85,12 @@ const domUpdates = {
   },
 
   displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate) {
-    let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-      if (Object.keys(a)[0] > Object.keys(b)[0]) {
-        return -1;
-      }
-      if (Object.keys(a)[0] < Object.keys(b)[0]) {
-        return 1;
-      }
-      return 0;
-    });
+    this.manipulateActivity(user, userRepository, activityData, todayDate);
+    this.manipulateHydration(user, hydrationData, todayDate, userRepository);
+    this.manipulateSleep(user, userRepository, sleepData, todayDate);
+  },
 
-    for (var i = 0; i < $('.daily-oz').length; i++) {
-      $('.daily-oz')[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-    }
-
-    $('#dropdown-goal').text(`DAILY STEP GOAL | ${user.dailyStepGoal}`);
-
-    $('#dropdown-email').text(`EMAIL | ${user.email}`);
-
-    $('#dropdown-name').text(user.name.toUpperCase());
-
-    $('#header-name').prepend(`${user.getFirstName()}'S `)
-
-    $('#hydration-user-ounces-today').text(function() {
-      return hydrationData.find(hydration => {
-        return hydration.userId === user.id && hydration.date === todayDate;
-      }).ounces;
-    })
-
-    $('#hydration-friend-ounces-today').text(userRepository.calculateAverageDailyWater(todayDate));
-
-    $('#hydration-info-glasses-today').text(function() {
-      return hydrationData.find(hydration => {
-        return hydration.userId === user.id && hydration.date === todayDate;
-      }).ounces / 8
-    })
-
-    $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
-
-    $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
-
-    $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
-      return user.id === userRepository.getLongestSleepers(todayDate)
-    }).getFirstName()}`)
-
-    $('#sleep-friend-worst-sleeper').text(userRepository.users.find(user => {
-      return user.id === userRepository.getWorstSleepers(todayDate)
-    }).getFirstName())
-
-    $('#sleep-info-hours-average-alltime').text(user.hoursSleptAverage)
-
-    $('#steps-info-miles-walked-today').text(user.activityRecord.find(activity => {
-      return (activity.date === todayDate && activity.userId === user.id)
-    }).calculateMiles(userRepository));
-
-    $('#sleep-info-quality-average-alltime').text(user.sleepQualityAverage)
-
-    $('#sleep-info-quality-today').text(sleepData.find(sleep => {
-      return sleep.userId === user.id && sleep.date === todayDate;
-    }).sleepQuality)
-
-    $('#sleep-user-hours-today').text(sleepData.find(sleep => {
-      return sleep.userId === user.id && sleep.date === todayDate;
-    }).hoursSlept)
-
+  manipulateActivity(user, userRepository, activityData, todayDate) {
     $('#stairs-calendar-flights-average-weekly').text(user.calculateAverageFlightsThisWeek(todayDate))
 
     $('#stairs-calendar-stairs-average-weekly').text((user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0))
@@ -190,8 +132,8 @@ const domUpdates = {
 
     user.friendsActivityRecords.forEach(friend => {
       $('#dropdown-friends-steps-container').append(`
-    <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-    `);
+  <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
+  `);
     });
 
     let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
@@ -207,6 +149,74 @@ const domUpdates = {
         paragraph.classList.add('yellow-text');
       }
     });
+  },
+
+  manipulateHydration(user, hydrationData, todayDate, userRepository) {
+    let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+      if (Object.keys(a)[0] > Object.keys(b)[0]) {
+        return -1;
+      }
+      if (Object.keys(a)[0] < Object.keys(b)[0]) {
+        return 1;
+      }
+      return 0;
+    })
+
+    for (var i = 0; i < $('.daily-oz').length; i++) {
+      $('.daily-oz')[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+    }
+
+    $('#dropdown-goal').text(`DAILY STEP GOAL | ${user.dailyStepGoal}`);
+
+    $('#dropdown-email').text(`EMAIL | ${user.email}`);
+
+    $('#dropdown-name').text(user.name.toUpperCase());
+
+    $('#header-name').prepend(`${user.getFirstName()}'S `);
+
+    $('#hydration-user-ounces-today').text(function () {
+      return hydrationData.find(hydration => {
+        return hydration.userId === user.id && hydration.date === todayDate;
+      }).ounces
+    })
+
+    $('#hydration-friend-ounces-today').text(userRepository.calculateAverageDailyWater(todayDate));
+
+    $('#hydration-info-glasses-today').text(function () {
+      return hydrationData.find(hydration => {
+        return hydration.userId === user.id && hydration.date === todayDate;
+      }).ounces / 8
+    })
+  },
+
+  manipulateSleep(user, userRepository, sleepData, todayDate) {
+    $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
+
+      $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
+
+      $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
+        return user.id === userRepository.getLongestSleepers(todayDate)
+      }).getFirstName()}`)
+
+      $('#sleep-friend-worst-sleeper').text(userRepository.users.find(user => {
+        return user.id === userRepository.getWorstSleepers(todayDate)
+      }).getFirstName())
+
+    $('#sleep-info-hours-average-alltime').text(user.hoursSleptAverage)
+
+    $('#steps-info-miles-walked-today').text(user.activityRecord.find(activity => {
+      return (activity.date === todayDate && activity.userId === user.id)
+    }).calculateMiles(userRepository));
+
+    $('#sleep-info-quality-average-alltime').text(user.sleepQualityAverage)
+
+    $('#sleep-info-quality-today').text(sleepData.find(sleep => {
+      return sleep.userId === user.id && sleep.date === todayDate;
+    }).sleepQuality)
+
+    $('#sleep-user-hours-today').text(sleepData.find(sleep => {
+      return sleep.userId === user.id && sleep.date === todayDate;
+    }).hoursSlept)
   }
 }
 export default domUpdates
