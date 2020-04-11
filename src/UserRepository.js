@@ -19,13 +19,13 @@ class UserRepository {
     }, 0);
     return total / this.users.length;
   }
-  calculateAverageSleepQuality() {
-    let totalSleepQuality = this.users.reduce((sum, user) => {
-      sum += user.sleepQualityAverage;
-      return sum;
-    }, 0);
-    return totalSleepQuality / this.users.length;
-  }
+  // calculateAverageSleepQuality() {
+  //   let totalSleepQuality = this.users.reduce((sum, user) => {
+  //     sum += user.sleepQualityAverage;
+  //     return sum;
+  //   }, 0);
+  //   return totalSleepQuality / this.users.length;
+  //
   calculateAverageSteps(date) {
     let allUsersStepsCount = this.users.map(user => {
       return user.activityRecord.filter(activity => {

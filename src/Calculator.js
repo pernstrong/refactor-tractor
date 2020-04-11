@@ -1,40 +1,29 @@
 class Calculator {
-  constructor(user, sleepData, activityData, hydrationData, userRepo) {
+  constructor(user, sleepData, activityData, hydrationData) {
     this.user = user;
     this.sleepData = sleepData;
     this.activityData = activityData;
     this.hydrationData = hydrationData;
-    this.userRepo = userRepo
   }
 
-  findFriendsTotalStepsForWeek(user, date) {
-    this.user.friends.map(friend => {
-      let matchedFriend = this.userRepo.users.find(user => user.id === friend);
-      this.calculateTotalStepsThisWeek(date);
-      this.user.friendsActivityRecords.push(
-        {
-          'id': matchedFriend.id,
-          'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
-          'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-        })
-    })
-    this.calculateTotalStepsThisWeek(date);
-    this.user.friendsActivityRecords.push({
-      'id': this.id,
-      'firstName': 'YOU',
-      'totalWeeklySteps': this.totalStepsThisWeek
-    });
-    this.user.friendsActivityRecords = this.user.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
-  }
-
-  calculateTotalStepsThisWeek(todayDate) {
-    this.user.totalStepsThisWeek = (this.user.activityRecord.reduce((sum, activity) => {
-      let index = this.user.activityRecord.indexOf(this.user.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.user.activityRecord.indexOf(activity) && this.user.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
+  calculateAverageHoursThisWeek(todayDate) {
+    return (this.user.sleepHoursRecord.reduce((sum, sleepAct) => {
+      let index = this.user.sleepHoursRecord.indexOf(this.user.sleepHoursRecord.find(sleep => sleep.date === todayDate));
+      if (index <= this.user.sleepHoursRecord.indexOf(sleepAct) && this.user.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
+        sum += sleepAct.hours;
       }
       return sum;
-    }, 0));
+    }, 0) / 7).toFixed(1);
+  }
+
+  calculateAverageQualityThisWeek(todayDate) {
+    return (this.user.sleepQualityRecord.reduce((sum, sleepAct) => {
+      let index = this.user.sleepQualityRecord.indexOf(this.user.sleepQualityRecord.find(sleep => sleep.date === todayDate));
+      if (index <= this.user.sleepQualityRecord.indexOf(sleepAct) && this.user.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
+        sum += sleepAct.quality;
+      }
+      return sum;
+    }, 0) / 7).toFixed(1);
   }
 
   console() {

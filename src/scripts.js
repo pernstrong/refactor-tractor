@@ -42,14 +42,14 @@ function createUserRepo(userInfo) {
 }
 
 function assignUser() {
-  // let randomNum = Math.floor((Math.random() * 49));
-  // user = userRepository.users[randomNum]
-  user = userRepository.users[12]
+  let randomNum = Math.floor((Math.random() * 49));
+  user = userRepository.users[randomNum]
+  // user = userRepository.users[12]
 }
 
 function createSleepInfo(sleepInfo) {
   sleepInfo.forEach(curSleep => {
-    const newSleep = new Sleep(curSleep, userRepository)
+    const newSleep = new Sleep(curSleep, userRepository, calculator)
     if (newSleep.hoursSlept !== "" && newSleep.sleepQuality !== "") {
       sleepData.push(newSleep)
     }

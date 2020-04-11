@@ -85,7 +85,6 @@ const domUpdates = {
   },
 
   displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate, calculator) {
-    console.log(calculator);
     let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
       if (Object.keys(a)[0] > Object.keys(b)[0]) {
         return -1;
@@ -122,9 +121,9 @@ const domUpdates = {
       }).ounces / 8
     })
 
-    $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
+    $('#sleep-calendar-hours-average-weekly').text(`${calculator.calculateAverageHoursThisWeek(todayDate)}`)
 
-    $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
+    $('#sleep-calendar-quality-average-weekly').text(`${calculator.calculateAverageQualityThisWeek(todayDate)}`)
 
     $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
       return user.id === userRepository.getLongestSleepers(todayDate)
@@ -164,11 +163,6 @@ const domUpdates = {
       return activity.userId === user.id && activity.date === todayDate;
     }).flightsOfStairs * 12);
 
-
-    $('#stairs-calendar-flights-average-weekly').text(user.calculateAverageFlightsThisWeek(todayDate))
-
-    $('#stairs-calendar-stairs-average-weekly').text((user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0))
-
     $('#steps-calendar-total-active-minutes-weekly').text(user.calculateAverageMinutesActiveThisWeek(todayDate))
 
     $('#steps-calendar-total-steps-weekly').text(user.calculateAverageStepsThisWeek(todayDate));
@@ -187,7 +181,7 @@ const domUpdates = {
       return activity.userId === user.id && activity.date === todayDate;
     }).steps);
 
-    calculator.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
+    user.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
     user.friendsActivityRecords.forEach(friend => {
       $('#dropdown-friends-steps-container').append(`
     <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
