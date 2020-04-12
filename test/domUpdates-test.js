@@ -10,7 +10,7 @@ const should = chai.should()
 describe('domUpdates', function () {
 
   afterEach(function() {
-    chai.spy.restore(domUpdates) 
+    chai.spy.restore(domUpdates)
   });
 
   it('Invoke displayActivityForm, Spies: clearDisplayForm & renderActivityDisplayForm', function() {
