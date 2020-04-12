@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-
 import User from '../src/User';
 
 
@@ -104,14 +103,6 @@ describe('User', function() {
       expect(user.sleepQualityAverage).to.equal('4.7');
     });
   })
-  it('calculateAverageHoursThisWeek should calculate average sleep hours for week before given date', function() {
-    user.sleepHoursRecord = [{date: "2019/09/22", hours: 9.6}, {date: "2019/09/21", hours: 8.2}, {date: "2019/09/20", hours: 9.9}, {date: "2019/09/19", hours: 4.2}, {date: "2019/09/18", hours: 9.5}, {date: "2019/09/17", hours: 7.8}, {date: "2019/09/16", hours: 10.2}, {date: "2019/09/15", hours: 5.7}, {date: "2019/09/14", hours: 8.8}, {date: "2019/09/13", hours: 4.6}, {date: "2019/09/12", hours: 5.3}];
-    expect(user.calculateAverageHoursThisWeek('2019/09/21')).to.equal('7.9');
-  });
-  it('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
-    user.sleepQualityRecord = [{date: "2019/09/22", quality: 9.6}, {date: "2019/09/21", quality: 8.2}, {date: "2019/09/20", quality: 9.9}, {date: "2019/09/19", quality: 4.2}, {date: "2019/09/18", quality: 9.5}, {date: "2019/09/17", quality: 7.8}, {date: "2019/09/16", quality: 10.2}, {date: "2019/09/15", quality: 5.7}, {date: "2019/09/14", quality: 8.8}, {date: "2019/09/13", quality: 4.6}, {date: "2019/09/12", quality: 5.3}];
-    expect(user.calculateAverageQualityThisWeek('2019/09/22')).to.equal('8.5')
-  });
   it('should have a method that return the highest climbing record', function() {
     user.activityRecord = [{flightsOfStairs: 10}, {flightsOfStairs: 15}, {flightsOfStairs: 17}]
     expect(user.findClimbingRecord()).to.equal(17)

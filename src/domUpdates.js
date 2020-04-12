@@ -17,10 +17,10 @@ const domUpdates = {
     this.renderSleepDisplayForm();
   },
 
-  displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate) {
-    this.manipulateActivity(user, userRepository, activityData, todayDate);
-    this.manipulateHydration(user, hydrationData, todayDate, userRepository);
-    this.manipulateSleep(user, userRepository, sleepData, todayDate);
+  displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate, calculator) {
+    this.manipulateActivity(user, userRepository, activityData, todayDate, calculator);
+    this.manipulateHydration(user, hydrationData, todayDate, userRepository, calculator);
+    this.manipulateSleep(user, userRepository, sleepData, todayDate, calculator);
   },
 
   renderActivityDisplayForm() {
@@ -59,7 +59,7 @@ const domUpdates = {
     </section>`)
   },
 
-  manipulateActivity(user, userRepository, activityData, todayDate) {
+  manipulateActivity(user, userRepository, activityData, todayDate, calculator) {
     $('#stairs-calendar-flights-average-weekly').text(user.calculateAverageFlightsThisWeek(todayDate))
 
     $('#stairs-calendar-stairs-average-weekly').text((user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0))
@@ -73,8 +73,6 @@ const domUpdates = {
     $('#stairs-user-stairs-today').text(activityData.find(activity => {
       return activity.userId === user.id && activity.date === todayDate;
     }).flightsOfStairs * 12);
-
-    $('#stairs-calendar-stairs-average-weekly').text((user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0))
 
     $('#steps-calendar-total-active-minutes-weekly').text(user.calculateAverageMinutesActiveThisWeek(todayDate))
 
@@ -117,7 +115,7 @@ const domUpdates = {
     });
   },
 
-  manipulateHydration(user, hydrationData, todayDate, userRepository) {
+  manipulateHydration(user, hydrationData, todayDate, userRepository, calculator) {
     let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
       if (Object.keys(a)[0] > Object.keys(b)[0]) {
         return -1;
@@ -155,10 +153,10 @@ const domUpdates = {
     })
   },
 
-  manipulateSleep(user, userRepository, sleepData, todayDate) {
-    $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
+  manipulateSleep(user, userRepository, sleepData, todayDate, calculator) {
+    $('#sleep-calendar-hours-average-weekly').text(`${calculator.calculateAverageHoursThisWeek(todayDate)}`)
 
-    $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
+    $('#sleep-calendar-quality-average-weekly').text(`${calculator.calculateAverageQualityThisWeek(todayDate)}`)
 
     $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
         return user.id === userRepository.getLongestSleepers(todayDate)
