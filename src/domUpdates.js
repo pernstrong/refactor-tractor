@@ -58,11 +58,12 @@ const domUpdates = {
     $(hideCard).toggleClass('hide')
   },
 
-  updateStepsTrending(user){
-    $('.trending-steps-phrase-container').html(`<p class='trend-line'>${user.trendingStepDays[0]}</p>`);
+  updateStepsTrending(calculator){
+    // console.log(calculator.trendingStepDays)
+    $('.trending-steps-phrase-container').html(`<p class='trend-line'>${calculator.trendingStepDays[0]}</p>`);
   },
-  updateStairsTrending(user){
-    $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${user.trendingStairsDays[0]}</p>`);
+  updateStairsTrending(calculator){
+    $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${calculator.trendingStairsDays[0]}</p>`);
   },
 
   clearDisplayActivityForm() {
@@ -84,7 +85,7 @@ const domUpdates = {
     $('.stair-amount-input').val('')
   },
 
-  displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate) {
+  displayAllInfo(user, calculator, userRepository, sleepData, activityData, hydrationData, todayDate) {
     let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
       if (Object.keys(a)[0] > Object.keys(b)[0]) {
         return -1;
@@ -123,7 +124,7 @@ const domUpdates = {
 
     $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
 
-    $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
+    $('#sleep-calendar-quality-average-weekly').text(`${calculator.calculateAverageQualityThisWeek(todayDate)}`)
 
     $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
       return user.id === userRepository.getLongestSleepers(todayDate)
@@ -149,9 +150,9 @@ const domUpdates = {
       return sleep.userId === user.id && sleep.date === todayDate;
     }).hoursSlept)
 
-    $('#stairs-calendar-flights-average-weekly').text(user.calculateAverageFlightsThisWeek(todayDate))
+    $('#stairs-calendar-flights-average-weekly').text(calculator.calculateAverageforWeek(todayDate, 1))
 
-    $('#stairs-calendar-stairs-average-weekly').text((user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0))
+    $('#stairs-calendar-stairs-average-weekly').text((calculator.calculateAverageforWeek(todayDate, 1) * 12).toFixed(0))
 
     $('#stairs-friend-flights-average-today').text((userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1));
 
@@ -163,14 +164,9 @@ const domUpdates = {
       return activity.userId === user.id && activity.date === todayDate;
     }).flightsOfStairs * 12);
 
+    $('#steps-calendar-total-active-minutes-weekly').text(calculator.calculateAverageforWeek(todayDate, 3))
 
-    $('#stairs-calendar-flights-average-weekly').text(user.calculateAverageFlightsThisWeek(todayDate))
-
-    $('#stairs-calendar-stairs-average-weekly').text((user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0))
-
-    $('#steps-calendar-total-active-minutes-weekly').text(user.calculateAverageMinutesActiveThisWeek(todayDate))
-
-    $('#steps-calendar-total-steps-weekly').text(user.calculateAverageStepsThisWeek(todayDate));
+    $('#steps-calendar-total-steps-weekly').text(calculator.calculateAverageforWeek(todayDate, 2));
 
     $('#steps-friend-active-minutes-average-today').text(userRepository.calculateAverageMinutesActive(todayDate));
 

@@ -13,7 +13,7 @@ let sleepData = []
 let activityData = []
 let hydrationData = []
 let user;
-
+let calculator;
 let todayDate = "2019/09/22";
 
 Promise.all([
@@ -29,7 +29,7 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
   createCalculator()
-  domUpdates.displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate)
+  domUpdates.displayAllInfo(user, calculator, userRepository, sleepData, activityData, hydrationData, todayDate)
 }
 
 function createUserRepo(userInfo) {
@@ -41,9 +41,9 @@ function createUserRepo(userInfo) {
 }
 
 function assignUser() {
-  // let randomNum = Math.floor((Math.random() * 49));
-  // user = userRepository.users[randomNum]
-  user = userRepository.users[12]
+  let randomNum = Math.floor((Math.random() * 49));
+  user = userRepository.users[randomNum]
+  // user = userRepository.users[12]
 }
 
 function createSleepInfo(sleepInfo) {
@@ -70,7 +70,7 @@ function createHydrationInfo(hyrdrationInfo) {
 }
 
 function createCalculator() {
-  const calculator = new Calculator(user, sleepData, activityData, hydrationData);
+  calculator = new Calculator(user, sleepData, activityData, hydrationData, todayDate);
 }
 
 //
@@ -82,9 +82,9 @@ $('#profile-button').on('click', domUpdates.showDropdown);
 
 $('#activity-button').on('click', domUpdates.showActivityDropDown)
 
-$('.stairs-trending-button').on('click', function() {
-  domUpdates.updateStairsTrending(user)
-});
+// $('.stairs-trending-button').on('click', function() {
+//   domUpdates.updateStairsTrending(user)
+// });
 
 $('.steps-info-button').on('click', function() {
   domUpdates.flipCard('#steps-info-card', '#steps-main-card');
@@ -136,15 +136,15 @@ $('.sleep-calendar-button').on('click', function() {
 })
 
 $('.steps-trending-button').on('click', function() {
-  user.findTrendingStepDays();
+  calculator.findTrendingDays(2);
   domUpdates.flipCard('#steps-trending-card', '#steps-main-card')
-  domUpdates.updateStepsTrending(user);
+  domUpdates.updateStepsTrending(calculator);
 });
 
 $('.stairs-trending-button').click(function() {
-  user.findTrendingStairsDays();
+  calculator.findTrendingDays(1);
   domUpdates.flipCard('#stairs-trending-card', '#stairs-main-card')
-  domUpdates.updateStairsTrending(user);
+  domUpdates.updateStairsTrending(calculator);
 })
 
 // PARENT-NODE IF RE-FACTOR
