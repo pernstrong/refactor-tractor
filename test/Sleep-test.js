@@ -2,6 +2,10 @@ import { expect } from 'chai';
 import Sleep from '../src/Sleep';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
+const chai = require('chai')
+  , spies = require('chai-spies');
+
+chai.use(spies);
 
 describe('Sleep', function() {
   let sleep1;
@@ -60,6 +64,10 @@ describe('Sleep', function() {
     }, userRepository);
   });
 
+  afterEach(function() {
+    chai.spy.restore(user1)
+  });
+
   it('should be a function', function() {
     expect(Sleep).to.be.a('function');
   });
@@ -98,4 +106,9 @@ describe('Sleep', function() {
   it('should update user\'s sleep quality average', function() {
     expect(user1.sleepQualityAverage).to.equal('1.8');
   });
+  it('should call updateSleep method when sleep is called', function() {
+    chai.spy.on(user1, 'updateSleep', () => {});
+    sleep1.sleep(userRepository)
+    expect(user1.updateSleep).to.have.been.called(1);
+  })
 });

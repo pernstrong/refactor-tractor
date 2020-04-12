@@ -1,12 +1,7 @@
 import { expect } from 'chai';
 import Calculator from '../src/Calculator'
-// import { chai } from 'chai-spies'
-// import { chai } from 'chai'
 const chai = require('chai')
-// const spies = require('chai-spies')
-// chai.use(spies)
-// import { expect } from 'chai';
-import spies from 'chai-spies';
+  , spies = require('chai-spies');
 chai.use(spies);
 
 describe('Calculator', function() {
@@ -14,10 +9,13 @@ describe('Calculator', function() {
   let calculator;
 
   beforeEach(function() {
-    calculator = new Calculator({id: 1, name: 'Luisa Hane'}, [{userId: 1, date: '2019/06/15', hoursSlept: 6.1, sleepQuality: 2.2}], [{userID:1, date: '2019/06/15', numSteps: 3577, minutesActive: 140, flightsOfStairs: 16}], [{userID: 1, date: '2019/06/15', numOunces: 37}])
+    calculator = new Calculator({id: 1, name: 'Luisa Hane'}, [{userId: 1, date: '2019/06/15', hoursSlept: 6.1, sleepQuality: 2.2}], [{userID:1, date: '2019/06/15', numSteps: 3577, minutesActive: 140, flightsOfStairs: 16}], [{userID: 1, date: '2019/06/15', numOunces: 37}], "2019/09/22")
 
     // chai.spy.on(calculator.calculateAverageforWeek, 'findActivityTypeAvg', () => {})
 })
+  afterEach(function() {
+    chai.spy.restore(calculator)
+  })
 
  it('should be a function', function() {
    expect(Calculator).to.be.a('function')
@@ -64,12 +62,6 @@ describe('Calculator', function() {
    expect(calculator.calculateAverageforWeek("2019/09/17", 1)).to.equal('8.4')
  });
 
- it('should call findActivityTypeAvg when calculateAverageforWeek is called', function() {
-   calculator.activityRecord = [{date: "2019/09/18", flightsOfStairs: 4}, {date: "2019/09/17", flightsOfStairs: 6}, {date: "2019/09/16", flightsOfStairs: 1}, {date: "2019/09/15", flightsOfStairs: 2}, {date: "2019/09/14", flightsOfStairs: 12}, {date: "2019/09/13", flightsOfStairs: 21}, {date: "2019/06/12", flightsOfStairs: 3}, {date: "2019/09/11", flightsOfStairs: 14}, {date: "2019/09/10", flightsOfStairs: 2}, {date: "2019/09/09", flightsOfStairs: 8}];
-   chai.spy.on(calculator.calculateAverageforWeek, 'findActivityTypeAvg', () => {})
-   calculator.calculateAverageforWeek("2019/09/17", 1)
-   expect(calculator.findActivityTypeAvg).to.have.been.called(1)
- })
  it('should find 3+ days with positive trend', function() {
    calculator.activityRecord = [{
    "date": "2019/06/29", "steps": 2},
@@ -134,9 +126,62 @@ describe('Calculator', function() {
 
    expect(calculator.activityType(1)).to.equal('climbing')
  })
- it.only('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
+ it('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
    calculator.user.sleepQualityRecord = [{date: "2019/09/22", quality: 9.6}, {date: "2019/09/21", quality: 8.2}, {date: "2019/09/20", quality: 9.9}, {date: "2019/09/19", quality: 4.2}, {date: "2019/09/18", quality: 9.5}, {date: "2019/09/17", quality: 7.8}, {date: "2019/09/16", quality: 10.2}, {date: "2019/09/15", quality: 5.7}, {date: "2019/09/14", quality: 8.8}, {date: "2019/09/13", quality: 4.6}, {date: "2019/09/12", quality: 5.3}];
    expect(calculator.calculateAverageQualityThisWeek('2019/09/22')).to.equal('8.5')
  });
+ // spies
+
+  it('should call findActivityTypeAvg when calculateAverageforWeek is called', function() {
+    calculator.activityRecord = [{date: "2019/09/18", flightsOfStairs: 4}, {date: "2019/09/17", flightsOfStairs: 6}, {date: "2019/09/16", flightsOfStairs: 1}]
+
+    chai.spy.on(calculator, 'findActivityTypeAvg', () => {});
+    calculator.calculateAverageforWeek("2019/09/17", 3)
+    expect(calculator.findActivityTypeAvg).to.have.been.called(2);
+  })
+
+  it('should call checkActivity when findTrendingDays is called', function (){
+    calculator.activityRecord = [{
+    "date": "2019/06/29", "steps": 2},
+    {"date": "2019/06/28", "steps": 1},
+    {"date": "2019/06/27", "steps": 4},
+    {"date": "2019/06/26", "steps": 3},
+    {"date": "2019/06/25", "steps": 1},
+    {"date": "2019/06/24", "steps": 12}]
+
+    chai.spy.on(calculator, 'checkActivity', () => {});
+    calculator.findTrendingDays(2)
+    expect(calculator.checkActivity).to.have.been.called(6);
+  })
+
+  it.only('should call trendingDays when findTrendingDays is called', function (){
+    calculator.activityRecord = [{
+    "date": "2019/06/29", "steps": 2},
+    {"date": "2019/06/28", "steps": 1},
+    {"date": "2019/06/27", "steps": 4},
+    {"date": "2019/06/26", "steps": 3},
+    {"date": "2019/06/25", "steps": 1},
+    {"date": "2019/06/24", "steps": 12}]
+
+    chai.spy.on(calculator, 'trendingDays', () => {});
+    calculator.findTrendingDays(2)
+    expect(calculator.trendingDays).to.have.been.called(1);
+  })
+  it.skip('should call activityType when findTrendingDays is called', function (){
+
+    calculator.activityRecord = [{
+    "date": "2019/06/29", "steps": 2},
+    {"date": "2019/06/28", "steps": 1},
+    {"date": "2019/06/27", "steps": 4},
+    {"date": "2019/06/26", "steps": 3},
+    {"date": "2019/06/25", "steps": 1},
+    {"date": "2019/06/24", "steps": 12}]
+
+    chai.spy.on(calculator, 'activityType', () => {});
+    calculator.findTrendingDays(2)
+    expect(calculator.activityType).to.have.been.called(1);
+  })
+
+
 
 })
