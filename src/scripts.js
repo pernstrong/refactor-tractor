@@ -9,11 +9,11 @@ import Sleep from './Sleep';
 import Calculator from './Calculator'
 import domUpdates from './domUpdates';
 let userRepository = new UserRepository();
+let calculator;
 let sleepData = []
 let activityData = []
 let hydrationData = []
 let user;
-let calculator;
 let todayDate = "2019/09/22";
 
 Promise.all([
@@ -29,8 +29,9 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
   createCalculator()
-  domUpdates.displayAllInfo(user, calculator, userRepository, sleepData, activityData, hydrationData, todayDate)
+  domUpdates.displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate, calculator)
 }
+
 
 function createUserRepo(userInfo) {
   userInfo.forEach(user => {
@@ -48,7 +49,7 @@ function assignUser() {
 
 function createSleepInfo(sleepInfo) {
   sleepInfo.forEach(curSleep => {
-    const newSleep = new Sleep(curSleep, userRepository)
+    const newSleep = new Sleep(curSleep, userRepository, calculator)
     if (newSleep.hoursSlept !== "" && newSleep.sleepQuality !== "") {
       sleepData.push(newSleep)
     }

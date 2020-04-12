@@ -46,7 +46,9 @@
           'totalWeeklySteps': matchedFriend.totalStepsThisWeek
         })
     })
-    this.calculateFriendsTotalStepsThisWeek(date);
+  }
+
+  calculateTotalStepsThisWeek(date){
     this.friendsActivityRecords.push({
       'id': this.id,
       'firstName': 'YOU',
