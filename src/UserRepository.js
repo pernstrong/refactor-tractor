@@ -69,6 +69,7 @@ class UserRepository {
     }, 0);
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
+  
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
       return user.addDailyOunces(date) > 0;
@@ -78,6 +79,7 @@ class UserRepository {
     }, 0)
     return Math.floor(sumDrankOnDate / todaysDrinkers.length);
   }
+
   findBestSleepers(date) {
     return this.users.filter(user => {
       return user.calculateAverageQualityThisWeek(date) > 3;
