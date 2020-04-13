@@ -14,7 +14,7 @@ let sleepData = []
 let activityData = []
 let hydrationData = []
 let user;
-
+let dog = 'fido'
 let todayDate = "2019/09/22";
 
 Promise.all([
