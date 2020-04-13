@@ -304,7 +304,7 @@ main {
 }
 .drop-down-form input {
 width: 33%;
-font-size: 2em;
+font-size: 1em;
 }
 .drop-down-form label {
 margin-top: 2%;
@@ -312,6 +312,11 @@ width: 33%;
 font-size: 2em;
 }
 
-.submit-activity {
+.submit-activity,
+.submit-hydration,
+.submit-sleep
+ {
   margin-top: 2%;
+  font-size: 1em;
+  background-color: #FFF;
 }

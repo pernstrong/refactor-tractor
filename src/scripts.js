@@ -92,11 +92,11 @@ $('.steps-info-button').on('click', function() {
 })
 
 $('.steps-friends-button').on('click', function() {
-    domUpdates.flipCard('#steps-friends-card', '#steps-main-card');
+  domUpdates.flipCard('#steps-friends-card', '#steps-main-card');
 })
 
 $('.steps-calendar-button').on('click', function() {
-    domUpdates.flipCard('#steps-calendar-card', '#steps-main-card')
+  domUpdates.flipCard('#steps-calendar-card', '#steps-main-card')
 })
 
 
@@ -208,18 +208,18 @@ function getSleepInputs() {
 
 let addCompletedActivity = (stepsWalked, activityTime, stairAmount) => {
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userID: user.id,
-        date: "2019/09/22",
-        numSteps: stepsWalked,
-        minutesActive: activityTime,
-        flightsOfStairs: stairAmount
-      })
-    }).then(response => console.log(response.json()))
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userID: user.id,
+      date: "2019/09/22",
+      numSteps: stepsWalked,
+      minutesActive: activityTime,
+      flightsOfStairs: stairAmount
+    })
+  }).then(response => console.log(response.json()))
     .catch(err => console.error(err))
   domUpdates.clearDisplayActivityForm()
   domUpdates.clearActivityInputs()
@@ -227,16 +227,16 @@ let addCompletedActivity = (stepsWalked, activityTime, stairAmount) => {
 
 const postHydration = (hydration) => {
   fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userID: user.id,
-        date: todayDate,
-        numOunces: hydration
-      })
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userID: user.id,
+      date: todayDate,
+      numOunces: hydration
     })
+  })
     .then(response => response.json())
     .catch(err => console.error(err))
   domUpdates.clearDisplayActivityForm()
@@ -247,18 +247,18 @@ function postNewSleep() {
   let sleepAmount = parseInt($('.sleep-amount-input').val())
   let sleepQuality = parseInt($('.sleep-quality-input').val())
   if (sleepAmount > 0 && sleepQuality > 0 && sleepQuality >= 1.0 && sleepQuality < 5.001) {
-  fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          userID: user.id,
-          date: todayDate,
-          hoursSlept: sleepAmount,
-          sleepQuality: sleepQuality
-        })
+    fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: user.id,
+        date: todayDate,
+        hoursSlept: sleepAmount,
+        sleepQuality: sleepQuality
       })
+    })
       .then(response => response.json())
       .catch(err => console.error(err))
   } else {

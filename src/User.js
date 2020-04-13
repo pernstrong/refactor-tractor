@@ -1,4 +1,4 @@
- class User {
+class User {
   constructor(userData) {
     this.id = userData.id;
     this.name = userData.name;
@@ -46,9 +46,10 @@
           'totalWeeklySteps': matchedFriend.totalStepsThisWeek
         })
     })
+    this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps)
   }
 
-  calculateTotalStepsThisWeek(date){
+  calculateTotalStepsThisWeek(date) {
     this.friendsActivityRecords.push({
       'id': this.id,
       'firstName': 'YOU',
@@ -79,14 +80,14 @@
 
   updateSleep(date, hours, quality) {
     this.sleepHoursRecord.unshift({
-      'date': date,
-      'hours': hours
+      date,
+      hours
     });
     this.sleepQualityRecord.unshift({
-      'date': date,
-      'quality': quality
+      date,
+      quality
     });
-    if(this.sleepHoursRecord.length) {
+    if (this.sleepHoursRecord.length) {
       this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
     } else {
       this.hoursSleptAverage = hours;

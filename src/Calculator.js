@@ -47,7 +47,6 @@ class Calculator {
       if (this.checkActivity(activity, i, numType)) {
         positiveDays.unshift(activity.date);
       } else if (positiveDays.length > 2) {
-        console.log(this.trendingDays(numType))
         this.trendingDays(numType).push(`Your most recent positive ${this.activityType(numType)} streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
         positiveDays = [];
       }

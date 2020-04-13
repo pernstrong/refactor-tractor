@@ -154,7 +154,7 @@ describe('Calculator', function() {
     expect(calculator.checkActivity).to.have.been.called(6);
   })
 
-  it.only('should call trendingDays when findTrendingDays is called', function (){
+  it('should call trendingDays when findTrendingDays is called', function (){
     calculator.activityRecord = [{
     "date": "2019/06/29", "steps": 2},
     {"date": "2019/06/28", "steps": 1},
@@ -163,11 +163,12 @@ describe('Calculator', function() {
     {"date": "2019/06/25", "steps": 1},
     {"date": "2019/06/24", "steps": 12}]
 
-    chai.spy.on(calculator, 'trendingDays', () => {});
+    chai.spy.on(calculator, 'trendingDays', () => []);
     calculator.findTrendingDays(2)
     expect(calculator.trendingDays).to.have.been.called(1);
   })
-  it.skip('should call activityType when findTrendingDays is called', function (){
+
+  it('should call activityType when findTrendingDays is called', function (){
 
     calculator.activityRecord = [{
     "date": "2019/06/29", "steps": 2},
