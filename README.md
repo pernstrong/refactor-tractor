@@ -10,7 +10,6 @@ To View:
 1) In terminal run: npm start
 2) Open http://localhost:8080/ in your browser.
 
-
 ## Collaborators
 Quinn Elder
 Joe Haefling
