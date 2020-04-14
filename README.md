@@ -3,6 +3,8 @@
 ## Abstract
 Refactor Tractor is a Turing Mod2 project in which we were given a code base for a Fitlit health tracker app. We were tasked to upgrade it with new features as well as refactor the code base. We implemented Sass, jQuery, Webpack, chai-spies and Fetch methods GET and POST. We also refactored for accessiblity, cross-browser/platform compatibilty as well as the overall principles of DRY and SRP.
 
+![site gif](https://media.giphy.com/media/efsys7ObPW4smvSrVP/source.mp4)
+
 ## Installation
 ** Fork this repo and clone it down.
 

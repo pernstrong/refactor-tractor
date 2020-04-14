@@ -32,7 +32,6 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   domUpdates.displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate, calculator)
 }
 
-
 function createUserRepo(userInfo) {
   userInfo.forEach(user => {
     const person = new User(user);
@@ -54,6 +53,7 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
+  console.log(sleepData[0])
 }
 
 function createActivityInfo(activityInfo) {
@@ -74,18 +74,13 @@ function createCalculator() {
   calculator = new Calculator(user, sleepData, activityData, hydrationData, todayDate);
 }
 
-//
-$('.new-info-container').on('click', function() {
-  determineActvityType()
+$('.new-info-container').on('click', function(event) {
+  determineActvityType(event)
 });
 
 $('#profile-button').on('click', domUpdates.showDropdown);
 
 $('#activity-button').on('click', domUpdates.showActivityDropDown)
-
-// $('.stairs-trending-button').on('click', function() {
-//   domUpdates.updateStairsTrending(user)
-// });
 
 $('.steps-info-button').on('click', function() {
   domUpdates.flipCard('#steps-info-card', '#steps-main-card');
@@ -98,7 +93,6 @@ $('.steps-friends-button').on('click', function() {
 $('.steps-calendar-button').on('click', function() {
   domUpdates.flipCard('#steps-calendar-card', '#steps-main-card')
 })
-
 
 $('.hydration-info-button').on('click', function() {
   domUpdates.flipCard('#hydration-info-card', '#hydration-main-card')
@@ -165,16 +159,12 @@ $('.sleep-go-back-button').on('click', function(event) {
   domUpdates.flipCard('#sleep-main-card', event.target.parentNode)
 })
 
-//not done
-
-
-//
 // CHANGE TO JQUERY
-function determineActvityType() {
-  if (event.target.classList.contains('activity-tab')) {
+function determineActvityType(event) {
+  if ($(event.target).hasClass('activity-tab')) {
     domUpdates.displayActivityForm()
     getActivityInputs()
-  } else if (event.target.classList.contains('sleep-tab')) {
+  } else if ($(event.target).hasClass('sleep-tab')) {
     domUpdates.displaySleepForm()
     getSleepInputs()
   } else {
@@ -188,7 +178,6 @@ function getActivityInputs() {
     let steps = parseInt($('.steps-walked-input').val())
     let time = parseInt($('.activity-time-input').val())
     let stairs = parseInt($('.stair-amount-input').val())
-    //spy
     addCompletedActivity(steps, time, stairs);
   })
 }

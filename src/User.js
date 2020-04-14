@@ -7,7 +7,6 @@ class User {
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
     this.friends = userData.friends;
-
     this.totalStepsThisWeek = 0;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
@@ -16,19 +15,16 @@ class User {
     this.sleepHoursRecord = [];
     this.sleepQualityRecord = [];
     this.accomplishedDays = [];
-
     this.activityRecord = [];
     this.friendsNames = [];
     this.friendsActivityRecords = []
   }
 
-  // stays
   getFirstName() {
     var names = this.name.split(' ');
     return names[0].toUpperCase();
   }
 
-  // stays here!
   findFriendsNames(users) {
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
@@ -58,7 +54,6 @@ class User {
     this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
   }
 
-  // goes
   updateHydration(date, amount) {
     this.ouncesRecord.unshift({[date]: amount});
     if (this.ouncesRecord.length) {
@@ -108,16 +103,6 @@ class User {
       return sum;
     }, 0) / 7).toFixed(1);
   }
-
-  // calculateAverageQualityThisWeek(todayDate) {
-  //   return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-  //     let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-  //     if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-  //       sum += sleepAct.quality;
-  //     }
-  //     return sum;
-  //   }, 0) / 7).toFixed(1);
-  // }
 
   updateActivities(activity) {
     this.activityRecord.unshift(activity);

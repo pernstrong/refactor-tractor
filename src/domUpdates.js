@@ -60,7 +60,6 @@ const domUpdates = {
   },
 
   manipulateActivity(user, userRepository, activityData, todayDate, calculator) {
-    // $('#stairs-friend-flights-average-today').text((calculator.calculateAverageforWeek(todayDate) / 12).toFixed(1));
     $('#stairs-friend-flights-average-today').text((userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1));
 
     $('#stairs-info-flights-today').text(activityData.find(activity => {
@@ -78,14 +77,6 @@ const domUpdates = {
     $('#steps-calendar-total-active-minutes-weekly').text(calculator.calculateAverageforWeek(todayDate, 3))
 
     $('#steps-calendar-total-steps-weekly').text(calculator.calculateAverageforWeek(todayDate, 2));
-
-    // updateStepsTrending(calculator){
-    //   $('.trending-steps-phrase-container').html(`<p class='trend-line'>${calculator.trendingStepDays[0]}</p>`);
-    // }
-    //
-    // updateStairsTrending(calculator){
-    //   $('.trending-stairs-phrase-container').html(`<p class='trend-line'>${calculator.trendingStairsDays[0]}</p>`);
-    // }
 
     $('#steps-friend-active-minutes-average-today').text(userRepository.calculateAverageMinutesActive(todayDate));
 
@@ -113,6 +104,7 @@ const domUpdates = {
 
     friendsStepsParagraphs.forEach(paragraph => {
       if (friendsStepsParagraphs[0] === paragraph) {
+        // paragraph.addClass('green-text')
         paragraph.classList.add('green-text');
       }
       if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
@@ -138,6 +130,10 @@ const domUpdates = {
     for (var i = 0; i < $('.daily-oz').length; i++) {
       $('.daily-oz')[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
     }
+
+    // $('.daily-oz').forEach((day, i) => {
+    //   day.text(user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+    // }))
 
     $('#dropdown-goal').text(`DAILY STEP GOAL | ${user.dailyStepGoal}`);
 
@@ -193,7 +189,7 @@ const domUpdates = {
   },
 
   clearDisplayForm() {
-    $('.display-form').innerHTML = '';
+    $('.display-form').text = '';
   },
 
   showDropdown() {

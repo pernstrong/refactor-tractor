@@ -9,9 +9,6 @@ const chai = require('chai')
 
 chai.use(spies);
 
-// const should = chai.should()
-//   , expect = chai.expect;
-
 describe('Activity', function() {
   let activity1;
   let activity2;
