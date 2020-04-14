@@ -28,9 +28,10 @@ function createDataSets(userInfo, sleepInfo, activityInfo, hydrationInfo) {
   createSleepInfo(sleepInfo)
   createActivityInfo(activityInfo)
   createHydrationInfo(hydrationInfo)
-  createCalculator(user, sleepData, activityData, hydrationData)
+  createCalculator()
   domUpdates.displayAllInfo(user, userRepository, sleepData, activityData, hydrationData, todayDate, calculator)
 }
+
 
 function createUserRepo(userInfo) {
   userInfo.forEach(user => {
@@ -70,7 +71,7 @@ function createHydrationInfo(hyrdrationInfo) {
 }
 
 function createCalculator() {
-   calculator = new Calculator(user, sleepData, activityData, hydrationData, userRepository);
+  calculator = new Calculator(user, sleepData, activityData, hydrationData, todayDate);
 }
 
 //
@@ -82,9 +83,9 @@ $('#profile-button').on('click', domUpdates.showDropdown);
 
 $('#activity-button').on('click', domUpdates.showActivityDropDown)
 
-$('.stairs-trending-button').on('click', function() {
-  domUpdates.updateStairsTrending(user)
-});
+// $('.stairs-trending-button').on('click', function() {
+//   domUpdates.updateStairsTrending(user)
+// });
 
 $('.steps-info-button').on('click', function() {
   domUpdates.flipCard('#steps-info-card', '#steps-main-card');
@@ -136,15 +137,15 @@ $('.sleep-calendar-button').on('click', function() {
 })
 
 $('.steps-trending-button').on('click', function() {
-  user.findTrendingStepDays();
+  calculator.findTrendingDays(2);
   domUpdates.flipCard('#steps-trending-card', '#steps-main-card')
-  domUpdates.updateStepsTrending(user);
+  domUpdates.updateStepsTrending(calculator);
 });
 
 $('.stairs-trending-button').click(function() {
-  user.findTrendingStairsDays();
+  calculator.findTrendingDays(1);
   domUpdates.flipCard('#stairs-trending-card', '#stairs-main-card')
-  domUpdates.updateStairsTrending(user);
+  domUpdates.updateStairsTrending(calculator);
 })
 
 // PARENT-NODE IF RE-FACTOR
