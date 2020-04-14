@@ -1,9 +1,20 @@
-import { expect } from 'chai';
 import Sleep from '../src/Sleep';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
+const chai = require('chai')
+  , spies = require('chai-spies');
+
+ chai.use(spies);
+
+ const should = chai.should()
+  , expect = chai.expect;
 
 describe('Sleep', function() {
+
+  afterEach(function() {
+    chai.spy.restore(Sleep)
+  });
+
   let sleep1;
   let sleep2;
   let sleep3;
@@ -59,6 +70,12 @@ describe('Sleep', function() {
       "sleepQuality": 1.4
     }, userRepository);
   });
+
+  it('Should invoke sleep, Spies: updateSleep', function() {
+    chai.spy.on(user1, 'updateSleep', () => {});
+    sleep1.sleep(userRepository)
+    expect(user1.updateSleep).to.have.been.called(1);
+  })
 
   it('should be a function', function() {
     expect(Sleep).to.be.a('function');
