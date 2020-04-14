@@ -3,9 +3,11 @@ import { expect } from 'chai';
 import Hydration from '../src/Hydration';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
+const chai = require('chai')
+  , spies = require('chai-spies');
+chai.use(spies);
 
 describe('Hydration', function() {
-  let hydration;
   let user1;
   let user2;
   let userRepository;
@@ -87,5 +89,10 @@ describe('Hydration', function() {
   it('should add the date and amount to the object record', function() {
     expect(user1.ouncesRecord).to.deep.equal([{"2019/06/15": 37}])
     expect(user2.ouncesRecord.length).to.equal(2)
+  })
+  it('should call the updateHydration method when drink method is called', function() {
+    chai.spy.on(user1, 'updateHydration', () => {})
+    hydrate1.drink(userRepository)
+    expect(user1.updateHydration).to.have.been.called(1)
   })
 });

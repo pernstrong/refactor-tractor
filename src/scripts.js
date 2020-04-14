@@ -43,7 +43,6 @@ function createUserRepo(userInfo) {
 function assignUser() {
   let randomNum = Math.floor((Math.random() * 49));
   user = userRepository.users[randomNum]
-  // user = userRepository.users[12]
 }
 
 function createSleepInfo(sleepInfo) {
@@ -53,7 +52,6 @@ function createSleepInfo(sleepInfo) {
       sleepData.push(newSleep)
     }
   })
-  console.log(sleepData[0])
 }
 
 function createActivityInfo(activityInfo) {
@@ -159,7 +157,6 @@ $('.sleep-go-back-button').on('click', function(event) {
   domUpdates.flipCard('#sleep-main-card', event.target.parentNode)
 })
 
-// CHANGE TO JQUERY
 function determineActvityType(event) {
   if ($(event.target).hasClass('activity-tab')) {
     domUpdates.displayActivityForm()

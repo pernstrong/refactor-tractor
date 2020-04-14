@@ -9,7 +9,7 @@ describe('Calculator', function() {
   let calculator;
 
   beforeEach(function() {
-    calculator = new Calculator({id: 1, name: 'Luisa Hane'}, [{userId: 1, date: '2019/06/15', hoursSlept: 6.1, sleepQuality: 2.2}], [{userID:1, date: '2019/06/15', numSteps: 3577, minutesActive: 140, flightsOfStairs: 16}], [{userID: 1, date: '2019/06/15', numOunces: 37}], "2019/09/22")
+    calculator = new Calculator({id: 1, name: 'Luisa Hane'}, [{userId: 1, date: '2019/06/15', hoursSlept: 6.1, sleepQuality: 2.2}], [{userID: 1, date: '2019/06/15', numSteps: 3577, minutesActive: 140, flightsOfStairs: 16}], [{userID: 1, date: '2019/06/15', numOunces: 37}], "2019/09/22")
 
   })
   afterEach(function() {
@@ -125,11 +125,6 @@ describe('Calculator', function() {
 
     expect(calculator.activityType(1)).to.equal('climbing')
   })
-  it('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
-    calculator.user.sleepQualityRecord = [{date: "2019/09/22", quality: 9.6}, {date: "2019/09/21", quality: 8.2}, {date: "2019/09/20", quality: 9.9}, {date: "2019/09/19", quality: 4.2}, {date: "2019/09/18", quality: 9.5}, {date: "2019/09/17", quality: 7.8}, {date: "2019/09/16", quality: 10.2}, {date: "2019/09/15", quality: 5.7}, {date: "2019/09/14", quality: 8.8}, {date: "2019/09/13", quality: 4.6}, {date: "2019/09/12", quality: 5.3}];
-    expect(calculator.calculateAverageQualityThisWeek('2019/09/22')).to.equal('8.5')
-  });
-
   // spies
   it('should call findActivityTypeAvg when calculateAverageforWeek is called', function() {
     calculator.activityRecord = [{date: "2019/09/18", flightsOfStairs: 4}, {date: "2019/09/17", flightsOfStairs: 6}, {date: "2019/09/16", flightsOfStairs: 1}]

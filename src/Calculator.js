@@ -5,13 +5,9 @@ class Calculator {
     this.activityData = activityData;
     this.hydrationData = hydrationData;
     this.todayDate = todayDate
-
     this.activityRecord = user.activityRecord
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
-    // this.sleepQualityRecord = [];
-
-
   }
 
   findClimbingRecord() {
@@ -55,9 +51,9 @@ class Calculator {
 
   checkActivity(activity, i, numType) {
     if (numType === 1) {
-    return (this.activityRecord[i + 1] && activity.flightsOfStairs > this.activityRecord[i + 1].flightsOfStairs)
-  } else {
-    return (this.activityRecord[i + 1] && activity.steps > this.activityRecord[i + 1].steps)
+      return (this.activityRecord[i + 1] && activity.flightsOfStairs > this.activityRecord[i + 1].flightsOfStairs)
+    } else {
+      return (this.activityRecord[i + 1] && activity.steps > this.activityRecord[i + 1].steps)
     }
   }
 
