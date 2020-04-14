@@ -71,11 +71,11 @@ describe('Sleep', function() {
     }, userRepository);
   });
 
-  it('Should invoke sleep, Spies: updateSleep', function() {
-    chai.spy.on(user1, 'updateSleep', () => {});
-    sleep1.sleep(userRepository)
-    expect(user1.updateSleep).to.have.been.called(1);
-  })
+
+  afterEach(function() {
+    chai.spy.restore(user1)
+  });
+
 
   it('should be a function', function() {
     expect(Sleep).to.be.a('function');
@@ -115,4 +115,9 @@ describe('Sleep', function() {
   it('should update user\'s sleep quality average', function() {
     expect(user1.sleepQualityAverage).to.equal('1.8');
   });
+  it('should call updateSleep method when sleep is called', function() {
+    chai.spy.on(user1, 'updateSleep', () => {});
+    sleep1.sleep(userRepository)
+    expect(user1.updateSleep).to.have.been.called(1);
+  })
 });

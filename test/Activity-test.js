@@ -4,6 +4,10 @@ import {
 import Activity from '../src/Activity';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
+const chai = require('chai')
+  , spies = require('chai-spies');
+
+chai.use(spies);
 
 describe('Activity', function() {
   let activity1;
@@ -55,6 +59,10 @@ describe('Activity', function() {
       "minutesActive": 280,
       "flightsOfStairs": 22
     }, userRepository);
+  });
+
+  afterEach(function() {
+    chai.spy.restore(user1)
   });
 
   it('should be a function', function() {
@@ -109,5 +117,12 @@ describe('Activity', function() {
     activity2.compareStepGoal(userRepository);
     expect(activity2.reachedStepGoal).to.equal(true);
   });
+  it('should call updateActivities method when doActivity is called', function() {
+
+    chai.spy.on(user1, 'updateActivities', () => {});
+    activity1.doActivity(userRepository)
+    expect(user1.updateActivities).to.have.been.called(1);
+
+  })
 
 });
