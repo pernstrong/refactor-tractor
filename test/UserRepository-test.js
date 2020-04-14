@@ -108,25 +108,7 @@ describe('UserRepository', function() {
     expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
   });
   it('should have a method that finds the best sleepers', function() {
-    const sleep1 = new Sleep({
-      "userID": 1,
-      "date": "2019/06/16",
-      "hoursSlept": 6.1,
-      "sleepQuality": 1000
-    }, userRepository);
-    const sleep2 = new Sleep({
-      "userID": 2,
-      "date": "2019/06/15",
-      "hoursSlept": 7.3,
-      "sleepQuality": 500
-    }, userRepository);
-    const sleep3 = new Sleep({
-      "userID": 3,
-      "date": "2019/06/15",
-      "hoursSlept": 9.3,
-      "sleepQuality": 1.4
-    }, userRepository);
-    expect(userRepository.findBestSleepers("2019/06/16")).to.deep.equal([user1, user2]);
+    expect(userRepository.findBestSleepers("2019/06/16")).to.deep.equal([user1, user3]);
   });
   it('should have a method that finds the longest sleepers', function() {
     const sleepInfo = [{
