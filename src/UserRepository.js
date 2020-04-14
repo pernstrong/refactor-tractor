@@ -100,7 +100,7 @@ class UserRepository {
   }
 
   findSleepInfoByDate(date, info) {
-    return info.filter(sleep => {
+    return sleepData.filter(sleep => {
       return sleep.date === date;
     })
   }

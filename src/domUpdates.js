@@ -168,11 +168,11 @@ const domUpdates = {
     $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
 
     $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
-        return user.id === userRepository.getLongestSleepers(todayDate, sleepData)
+        return user.id === userRepository.getLongestSleepers(todayDate)
       }).getFirstName()}`)
 
     $('#sleep-friend-worst-sleeper').text(userRepository.users.find(user => {
-      return user.id === userRepository.getWorstSleepers(todayDate, sleepData)
+      return user.id === userRepository.getWorstSleepers(todayDate)
     }).getFirstName())
 
     $('#sleep-info-hours-average-alltime').text(user.hoursSleptAverage)
