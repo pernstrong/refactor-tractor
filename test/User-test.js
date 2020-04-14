@@ -192,4 +192,8 @@ describe('User', function() {
     user.findFriendsTotalStepsForWeek(users, '2019/06/29');
     expect(user.friendsActivityRecords).to.deep.equal([{firstName: "JOHN", id: 4, totalWeeklySteps: 734}, {firstName: "BEN", id: 16, totalWeeklySteps: 248}, {firstName: "NICK", id: 8, totalWeeklySteps: 34}]);
   });
+  it('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
+    user.sleepQualityRecord = [{date: "2019/09/22", quality: 9.6}, {date: "2019/09/21", quality: 8.2}, {date: "2019/09/20", quality: 9.9}, {date: "2019/09/19", quality: 4.2}, {date: "2019/09/18", quality: 9.5}, {date: "2019/09/17", quality: 7.8}, {date: "2019/09/16", quality: 10.2}, {date: "2019/09/15", quality: 5.7}, {date: "2019/09/14", quality: 8.8}, {date: "2019/09/13", quality: 4.6}, {date: "2019/09/12", quality: 5.3}];
+    expect(user.calculateAverageQualityThisWeek('2019/09/22')).to.equal('8.5')
+  });
 });

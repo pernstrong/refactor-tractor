@@ -76,15 +76,6 @@ class Calculator {
       return 'step'
     }
   }
-  calculateAverageQualityThisWeek(todayDate) {
-    return (this.user.sleepQualityRecord.reduce((sum, sleepAct) => {
-    let index = this.user.sleepQualityRecord.indexOf(this.user.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-    if (index <= this.user.sleepQualityRecord.indexOf(sleepAct) && this.user.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-      sum += sleepAct.quality;
-    }
-      return sum;
-    }, 0) / 7).toFixed(1);
-  }
 
 }
 

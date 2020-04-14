@@ -12,7 +12,8 @@ class Sleep extends Fit {
     var sleep = this;
     userRepo.users.find(function(user) {
       return user.id === sleep.userId;
-    }).updateSleep(this.date, this.hoursSlept, this.sleepQuality);
+    })
+    // return currentUser.updateSleep(this.date, this.hoursSlept, this.sleepQuality);
   }
 
 }
