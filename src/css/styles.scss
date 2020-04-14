@@ -315,3 +315,72 @@ font-size: 2em;
 .submit-activity {
   margin-top: 2%;
 }
+@media screen and (max-width: 900px) {
+  body{
+    height: 95%;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+  .main-card  {
+    height: 100%;
+  }
+  .main-card-top-row{
+    // margin: 5% 0 0 0;
+  }
+  h3 {
+    font-size: 5vw;
+  }
+  #steps-card-container {
+    margin: 2.5vw 1.5vw;
+  }
+  #hydration-card-container {
+    margin: 2.5vw 1.5vw;
+  }
+  #stairs-card-container {
+    margin: 2.5vw 1.5vw;
+  }
+  #sleep-card-container {
+    margin: 2.5vw 1.5vw;
+  }
+  .friends-button {
+    background-position: center;
+    background-size: 10vw;
+    background-repeat: no-repeat;
+    height: 9.4vw;
+    width: 9.4vw;
+    margin: 0 5% 4% 0;
+    // cursor: pointer;
+  }
+  .info-button {
+    background-position: center;
+    background-size: 10vw;
+    background-repeat: no-repeat;
+    // border: none;
+    height: 9.4vw;
+    width: 9.4vw;
+    margin: 0 0 4% 5%;
+    // cursor: pointer;
+}
+  .trending-button {
+    background-position: center;
+    background-size: 10vw;
+    background-repeat: no-repeat;
+    // border: none;
+    height: 9.4vw;
+    width: 9.4vw;
+    margin: 0 0 0 5%;
+    // cursor: pointer;
+}
+  .calendar-button {
+    background-position: center;
+    background-size: 10vw;
+    background-repeat: no-repeat;
+    // border: none;
+    height: 9.4vw;
+    width: 9.4vw;
+    margin: 0vw 5% 0vw 0vw;
+    // cursor: pointer;
+}
+}

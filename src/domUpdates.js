@@ -165,14 +165,14 @@ const domUpdates = {
   manipulateSleep(user, userRepository, sleepData, todayDate, calculator) {
     $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
 
-    $('#sleep-calendar-quality-average-weekly').text(`${calculator.calculateAverageQualityThisWeek(todayDate)}`)
+    $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
 
     $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
-        return user.id === userRepository.getLongestSleepers(todayDate)
+        return user.id === userRepository.getLongestSleepers(todayDate, sleepData)
       }).getFirstName()}`)
 
     $('#sleep-friend-worst-sleeper').text(userRepository.users.find(user => {
-      return user.id === userRepository.getWorstSleepers(todayDate)
+      return user.id === userRepository.getWorstSleepers(todayDate, sleepData)
     }).getFirstName())
 
     $('#sleep-info-hours-average-alltime').text(user.hoursSleptAverage)

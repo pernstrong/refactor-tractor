@@ -1,14 +1,22 @@
-import { expect } from 'chai';
-
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 import Sleep from '../src/Sleep';
+
+const chai = require('chai')
+  , spies = require('chai-spies');
+
+chai.use(spies)
+
+const should = chai.should()
+  , expect = chai.expect;
+
 
 describe('UserRepository', function() {
   let user1;
   let user2;
   let user3;
   let userRepository;
+
   beforeEach(() => {
     user1 = new User({
       'id': 1,
@@ -53,7 +61,12 @@ describe('UserRepository', function() {
     })
     userRepository = new UserRepository();
     userRepository.users.push(user1, user2, user3);
-  })
+    })
+    afterEach(function() {
+      chai.spy.restore(userRepository)
+    })
+
+
   it('should be a function', function() {
     expect(UserRepository).to.be.a('function');
   });
@@ -116,7 +129,7 @@ describe('UserRepository', function() {
     expect(userRepository.findBestSleepers("2019/06/16")).to.deep.equal([user1, user2]);
   });
   it('should have a method that finds the longest sleepers', function() {
-    const sleepData = [{
+    const sleepInfo = [{
       "userID": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
@@ -132,10 +145,10 @@ describe('UserRepository', function() {
       "hoursSlept": 9.3,
       "sleepQuality": 1.4
     }];
-    expect(userRepository.getLongestSleepers("2019/06/15")).to.equal(3);
+    expect(userRepository.getLongestSleepers("2019/06/15", sleepInfo)).to.equal(3);
   });
   it('should have a method that finds the worst sleepers', function() {
-    const sleepData = [{
+    const sleepInfo = [{
       "userID": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
@@ -151,7 +164,7 @@ describe('UserRepository', function() {
       "hoursSlept": 9.3,
       "sleepQuality": 1.4
     }];
-    expect(userRepository.getWorstSleepers("2019/06/15")).to.equal(1);
+    expect(userRepository.getWorstSleepers("2019/06/15", sleepInfo)).to.equal(1);
   });
   it('should have a method that calculates average number of stairs for users', function() {
     user1.activityRecord = [{date: "2019/09/17", flightsOfStairs: 10}, {date: "2019/09/17", flightsOfStairs: 15}];
@@ -167,5 +180,36 @@ describe('UserRepository', function() {
     user1.activityRecord = [{date: "2019/09/17", minutesActive: 100}, {date: "2019/09/17", minutesActive: 20}];
     user2.activityRecord = [{date: "2019/09/16", minutesActive: 78}, {date: "2019/09/17", minutesActive: 12}];
     expect(userRepository.calculateAverageMinutesActive("2019/09/17")).to.equal(44);
+  })
+  it('Invoke calculateAverageDailyWater, Spies: addDailyOunces', function() {
+    chai.spy.on(user1, 'addDailyOunces', () => {})
+    userRepository.calculateAverageDailyWater("2019/06/15");
+    expect(user1.addDailyOunces).to.have.been.called(1);
+  })
+  it('Invoke findBestSleepers, Spies: calculateAverageQualityThisWeek', function() {
+    chai.spy.on(user1, 'calculateAverageQualityThisWeek', () => {})
+    userRepository.findBestSleepers("2019/06/15");
+    expect(user1.calculateAverageQualityThisWeek).to.have.been.called(1);
+  })
+  it.only('Invoke getLongestSleepers, Spies: findSleepInfoByDate', function() {
+    const sleepInfo = [{
+      "userID": 1,
+      "date": "2019/06/15",
+      "hoursSlept": 6.1,
+      "sleepQuality": 1000
+    }, {
+      "userID": 2,
+      "date": "2019/06/15",
+      "hoursSlept": 7.3,
+      "sleepQuality": 500
+    }, {
+      "userID": 3,
+      "date": "2019/06/15",
+      "hoursSlept": 9.3,
+      "sleepQuality": 1.4
+    }];
+    chai.spy.on(userRepository, 'findSleepInfoByDate', () => {});
+    userRepository.getWorstSleepers("2019/06/15", sleepInfo);
+    expect(userRepository.findSleepInfoByDate).to.have.been.called(1);
   })
 });
