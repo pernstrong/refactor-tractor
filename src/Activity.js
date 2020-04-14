@@ -3,8 +3,6 @@ import Fit from '../src/Fit';
 class Activity extends Fit {
   constructor(data, userRepository) {
     super(data, userRepository)
-    // this.userId = data.userID;
-    // this.date = data.date;
     this.steps = data.numSteps;
     this.minutesActive = data.minutesActive;
     this.flightsOfStairs = data.flightsOfStairs;

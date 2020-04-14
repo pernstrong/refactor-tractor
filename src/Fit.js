@@ -1,5 +1,5 @@
 class Fit {
-  constructor(data, userRepository) {
+  constructor(data) {
     this.userId = data.userID;
     this.date = data.date;
   }

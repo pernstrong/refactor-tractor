@@ -104,7 +104,6 @@ const domUpdates = {
 
     friendsStepsParagraphs.forEach(paragraph => {
       if (friendsStepsParagraphs[0] === paragraph) {
-        // paragraph.addClass('green-text')
         paragraph.classList.add('green-text');
       }
       if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
@@ -116,7 +115,7 @@ const domUpdates = {
     });
   },
 
-  manipulateHydration(user, hydrationData, todayDate, userRepository, calculator) {
+  manipulateHydration(user, hydrationData, todayDate, userRepository) {
     let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
       if (Object.keys(a)[0] > Object.keys(b)[0]) {
         return -1;
@@ -130,10 +129,6 @@ const domUpdates = {
     for (var i = 0; i < $('.daily-oz').length; i++) {
       $('.daily-oz')[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
     }
-
-    // $('.daily-oz').forEach((day, i) => {
-    //   day.text(user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-    // }))
 
     $('#dropdown-goal').text(`DAILY STEP GOAL | ${user.dailyStepGoal}`);
 
@@ -158,17 +153,17 @@ const domUpdates = {
     })
   },
 
-  manipulateSleep(user, userRepository, sleepData, todayDate, calculator) {
+  manipulateSleep(user, userRepository, sleepData, todayDate) {
     $('#sleep-calendar-hours-average-weekly').text(`${user.calculateAverageHoursThisWeek(todayDate)}`)
 
     $('#sleep-calendar-quality-average-weekly').text(`${user.calculateAverageQualityThisWeek(todayDate)}`)
 
     $('#sleep-friend-longest-sleeper').text(`${userRepository.users.find(user => {
-        return user.id === userRepository.getLongestSleepers(todayDate)
-      }).getFirstName()}`)
+      return user.id === userRepository.getLongestSleepers(todayDate, sleepData)
+    }).getFirstName()}`)
 
     $('#sleep-friend-worst-sleeper').text(userRepository.users.find(user => {
-      return user.id === userRepository.getWorstSleepers(todayDate)
+      return user.id === userRepository.getWorstSleepers(todayDate, sleepData)
     }).getFirstName())
 
     $('#sleep-info-hours-average-alltime').text(user.hoursSleptAverage)

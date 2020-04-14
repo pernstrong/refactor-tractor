@@ -1,13 +1,11 @@
 import Sleep from '../src/Sleep';
+import { expect } from 'chai';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 const chai = require('chai')
   , spies = require('chai-spies');
 
- chai.use(spies);
-
- const should = chai.should()
-  , expect = chai.expect;
+chai.use(spies);
 
 describe('Sleep', function() {
 

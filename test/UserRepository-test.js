@@ -1,15 +1,12 @@
 import UserRepository from '../src/UserRepository';
+import { expect } from 'chai';
+
 import User from '../src/User';
-import Sleep from '../src/Sleep';
 
 const chai = require('chai')
   , spies = require('chai-spies');
 
 chai.use(spies)
-
-const should = chai.should()
-  , expect = chai.expect;
-
 
 describe('UserRepository', function() {
   let user1;
@@ -61,10 +58,10 @@ describe('UserRepository', function() {
     })
     userRepository = new UserRepository();
     userRepository.users.push(user1, user2, user3);
-    })
-    afterEach(function() {
-      chai.spy.restore(userRepository)
-    })
+  })
+  afterEach(function() {
+    chai.spy.restore(userRepository)
+  })
 
 
   it('should be a function', function() {
@@ -108,21 +105,26 @@ describe('UserRepository', function() {
     expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
   });
   it('should have a method that finds the best sleepers', function() {
-    expect(userRepository.findBestSleepers("2019/06/16")).to.deep.equal([user1, user3]);
+   
+    user1.sleepQualityRecord = [{date: "2019/06/09", quality: 4.8}, {date: "2019/06/10", quality: 4.8}, {date: "2019/06/11", quality: 4.8}, {date: "2019/06/12", quality: 4.8}, {date: "2019/06/13", quality: 4.8}, {date: "2019/06/14", quality: 4.8}, {date: "2019/06/15", quality: 4.8}] 
+    user2.sleepQualityRecord = [{date: "2019/06/09", quality: 1.8}, {date: "2019/06/10", quality: 1.8}, {date: "2019/06/11", quality: 1.8}, {date: "2019/06/12", quality: 1.8}, {date: "2019/06/13", quality: 1.8}, {date: "2019/06/14", quality: 1.8}, {date: "2019/06/15", quality: 1.8}]
+    user3.sleepQualityRecord = [{date: "2019/06/09", quality: 4.4}, {date: "2019/06/10", quality: 4.4}, {date: "2019/06/11", quality: 4.4}, {date: "2019/06/12", quality: 4.4}, {date: "2019/06/13", quality: 4.4}, {date: "2019/06/14", quality: 4.4}, {date: "2019/06/15", quality: 4.4}]
+
+    expect(userRepository.findBestSleepers("2019/06/10")).to.deep.equal([user1, user3])
   });
   it('should have a method that finds the longest sleepers', function() {
     const sleepInfo = [{
-      "userID": 1,
+      "userId": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
       "sleepQuality": 100
     }, {
-      "userID": 2,
+      "userId": 2,
       "date": "2019/06/15",
       "hoursSlept": 7.3,
       "sleepQuality": 1500
     }, {
-      "userID": 3,
+      "userId": 3,
       "date": "2019/06/15",
       "hoursSlept": 9.3,
       "sleepQuality": 1.4
@@ -131,17 +133,17 @@ describe('UserRepository', function() {
   });
   it('should have a method that finds the worst sleepers', function() {
     const sleepInfo = [{
-      "userID": 1,
+      "userId": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
       "sleepQuality": 1000
     }, {
-      "userID": 2,
+      "userId": 2,
       "date": "2019/06/15",
       "hoursSlept": 7.3,
       "sleepQuality": 500
     }, {
-      "userID": 3,
+      "userId": 3,
       "date": "2019/06/15",
       "hoursSlept": 9.3,
       "sleepQuality": 1.4
@@ -173,25 +175,47 @@ describe('UserRepository', function() {
     userRepository.findBestSleepers("2019/06/15");
     expect(user1.calculateAverageQualityThisWeek).to.have.been.called(1);
   })
-  it.only('Invoke getLongestSleepers, Spies: findSleepInfoByDate', function() {
+  it('Invoke getWorstSleepers, Spies: findSleepInfoByDate', function() {
     const sleepInfo = [{
-      "userID": 1,
+      "userId": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
       "sleepQuality": 1000
     }, {
-      "userID": 2,
+      "userId": 2,
       "date": "2019/06/15",
       "hoursSlept": 7.3,
       "sleepQuality": 500
     }, {
-      "userID": 3,
+      "userId": 3,
       "date": "2019/06/15",
       "hoursSlept": 9.3,
       "sleepQuality": 1.4
     }];
-    chai.spy.on(userRepository, 'findSleepInfoByDate', () => {});
+    chai.spy.on(userRepository, 'findSleepInfoByDate');
     userRepository.getWorstSleepers("2019/06/15", sleepInfo);
     expect(userRepository.findSleepInfoByDate).to.have.been.called(1);
   })
+  it('Invoke getLongest, Spies: findSleepInfoByDate', function() {
+    const sleepInfo = [{
+      "userId": 1,
+      "date": "2019/06/15",
+      "hoursSlept": 6.1,
+      "sleepQuality": 1000
+    }, {
+      "userId": 2,
+      "date": "2019/06/15",
+      "hoursSlept": 7.3,
+      "sleepQuality": 500
+    }, {
+      "userId": 3,
+      "date": "2019/06/15",
+      "hoursSlept": 9.3,
+      "sleepQuality": 1.4
+    }];
+    chai.spy.on(userRepository, 'findSleepInfoByDate');
+    userRepository.getLongestSleepers("2019/06/15", sleepInfo);
+    expect(userRepository.findSleepInfoByDate).to.have.been.called(1);
+  })
+
 });

@@ -1,7 +1,3 @@
-import sleepData from './data/sleep';
-//73 calculateAverageDailyWater
-//83 findBestSleepers
-//88 & 89
 class UserRepository {
   constructor() {
     this.users = [];
@@ -87,20 +83,20 @@ class UserRepository {
       return user.calculateAverageQualityThisWeek(date) > 3;
     })
   }
+
   getLongestSleepers(date, info) {
     return this.findSleepInfoByDate(date, info).sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
-    })[0].userID;
+    })[0].userId;
   }
   getWorstSleepers(date, info) {
-    this.findSleepInfoByDate(date, info)
     return this.findSleepInfoByDate(date, info).sort((a, b) => {
       return a.hoursSlept - b.hoursSlept;
-    })[0].userID;
+    })[0].userId;
   }
 
   findSleepInfoByDate(date, info) {
-    return sleepData.filter(sleep => {
+    return info.filter(sleep => {
       return sleep.date === date;
     })
   }
