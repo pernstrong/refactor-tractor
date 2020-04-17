@@ -49,7 +49,7 @@ function createSleepInfo(sleepInfo) {
   sleepInfo.forEach(curSleep => {
     const newSleep = new Sleep(curSleep, userRepository)
     if (newSleep.hoursSlept !== "" && newSleep.sleepQuality !== "") {
-      sleepData.push(newSleep)
+      `sleepData`.push(newSleep)
     }
   })
 }
